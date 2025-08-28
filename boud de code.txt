@@ -1,0 +1,47 @@
+   //Retourne le nombre minimum des visites pre-atribuées
+        public static int RecupNumMinPR(int CodeMedecin)
+        {
+            int NumMin = 0;
+
+            //Chaine de connection... ici on attaque MariaDB         
+            string connex = WebConfigurationManager.ConnectionStrings["Connection_Base_Regulation"].ToString();
+            MySqlConnection dbConnection = new MySqlConnection(connex);
+
+            dbConnection.Open();
+            MySqlCommand cmd = new MySqlCommand();
+
+            cmd.Connection = dbConnection;
+                       
+            try
+            {            
+                string SqlStr0 = "SELECT MIN(Ordre) FROM status_visite";
+                SqlStr0 += " WHERE Status = 'PR' AND CodeMedecin = " + CodeMedecin;
+              
+                //on execute les requettes                                     
+                cmd.CommandText = SqlStr0;
+
+                DataTable dtResult = new DataTable();
+                dtResult.Load(cmd.ExecuteReader());    //on execute
+
+
+                if (dtResult.Rows[0][0].ToString() != "" && dtResult.Rows[0][0] != DBNull.Value)
+                    NumMin = int.Parse(dtResult.Rows[0][0].ToString()) - 1;
+                else NumMin = -1;                                             
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Erreur lors de la création de la visite multiple. " + e.Message);
+            }
+            finally
+            {
+                //fermeture des connexions
+                if (dbConnection.State == System.Data.ConnectionState.Open)
+                {
+                    dbConnection.Close();
+                }
+            }
+
+            return NumMin;
+        }
+
+

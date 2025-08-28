@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?PowerDesigner signature="Workspace" version="15.1.0.2850"?>
+<!-- Veuillez ne pas modifier ce fichier -->
+
+<Workspace>
+	<Local Expanded="Yes">
+		<Model Expanded="Yes" ID="{C3F63F33-8EE6-4264-9429-51B83C1417AC}" Loaded="No" Name="BaseRegulation" Type="{CDE44E21-9669-11D1-9914-006097355D9B}" URL="BaseRegulation.mpd"/>
+		<Model Expanded="Yes" ID="{34FCCE11-AEBE-4535-A8EC-5DD2C659C394}" Loaded="No" Name="BaseFicheVisite" Type="{CDE44E21-9669-11D1-9914-006097355D9B}" URL="BaseFicheVisite.mpd"/>
+		<Model Expanded="Yes" ID="{D8663C69-B6BC-42FE-8BC8-DED0C4C116CD}" Loaded="No" Name="BaseProjetDakar" Type="{CDE44E21-9669-11D1-9914-006097355D9B}" URL="/Dev/Projet_Dakar/Doc/BaseProjetDakar.mpd"/>
+		<Model ID="{E5558F05-1823-4317-AD82-200EB14E7337}" Loaded="No" Name="Base Travel Safe" Type="{CDE44E21-9669-11D1-9914-006097355D9B}" URL="/Dev/WebApp/Docs/BaseTravelSafe.mpd"/>
+		<Model Expanded="Yes" ID="{E5558F05-1823-4317-AD82-200EB14E7337}" Loaded="No" Name="Base Travel Safe" Type="{CDE44E21-9669-11D1-9914-006097355D9B}" URL="/Dev/WebApp/Docs/BaseTravelSafe.mpd"/>
+		<Model Expanded="Yes" ID="{C3F63F33-8EE6-4264-9429-51B83C1417AC}" Loaded="No" Name="BaseRegulation" Type="{CDE44E21-9669-11D1-9914-006097355D9B}" URL="BaseRegulation.mpd"/>
+		<Model Expanded="Yes" ID="{C3F63F33-8EE6-4264-9429-51B83C1417AC}" Loaded="No" Name="BaseRegulation" Type="{CDE44E21-9669-11D1-9914-006097355D9B}" URL="BaseRegulation.mpd"/>
+		<Model Expanded="Yes" ID="{C3F63F33-8EE6-4264-9429-51B83C1417AC}" Loaded="No" Name="BaseRegulation" Type="{CDE44E21-9669-11D1-9914-006097355D9B}" URL="BaseRegulation.mpd"/>
+		<Model Expanded="Yes" ID="{0AA153AB-283B-4263-B124-DA472F2B6C78}" Loaded="No" Name="Regulation" Type="{FF4B6538-9856-42CF-B9B9-304ED370CEAA}" URL="Regulation/Regulation.prj"/>
+		<Model Expanded="Yes" ID="{0AA153AB-283B-4263-B124-DA472F2B6C78}" Loaded="No" Name="Regulation" Type="{FF4B6538-9856-42CF-B9B9-304ED370CEAA}" URL="Regulation/Regulation.prj"/>
+		<Model Expanded="Yes" ID="{0AA153AB-283B-4263-B124-DA472F2B6C78}" Name="Regulation" Type="{FF4B6538-9856-42CF-B9B9-304ED370CEAA}" URL="Regulation/Regulation.prj"/>
+	</Local>
+	<BrowserModule Name="Référentiel"/>
+</Workspace>

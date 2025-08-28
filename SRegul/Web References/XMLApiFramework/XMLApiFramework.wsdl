@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:intf="http://xmlapi.alcatel.com/framework" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns1="http://xmlapi.alcatel.com/framework/types" xmlns:tns2="http://xmlapi.alcatel.com/common" xmlns:impl="http://xmlapi.alcatel.com/framework" targetNamespace="http://xmlapi.alcatel.com/framework" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://xmlapi.alcatel.com/framework/types">
+      <xsd:import namespace="http://xmlapi.alcatel.com/common" />
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:simpleType name="AlcFwError">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="BAD_FRAMEWORK_LOGIN_PASSWORD" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:complexType name="AlcFwException">
+        <xsd:sequence>
+          <xsd:element name="fault" nillable="true" type="tns1:AlcFwError" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="AlcUserInfo">
+        <xsd:sequence>
+          <xsd:element name="companyDect" nillable="true" type="xsd:string" />
+          <xsd:element name="companyPhone" nillable="true" type="xsd:string" />
+          <xsd:element name="email" nillable="true" type="xsd:string" />
+          <xsd:element name="firstName" nillable="true" type="xsd:string" />
+          <xsd:element name="language" nillable="true" type="xsd:string" />
+          <xsd:element name="loginName" nillable="true" type="xsd:string" />
+          <xsd:element name="myAssistantAllowed" type="xsd:boolean" />
+          <xsd:element name="myManagementAllowed" type="xsd:boolean" />
+          <xsd:element name="myMessagingAllowed" type="xsd:boolean" />
+          <xsd:element name="myPhoneAllowed" type="xsd:boolean" />
+          <xsd:element name="myTeamworkAllowed" type="xsd:boolean" />
+          <xsd:element name="name" nillable="true" type="xsd:string" />
+          <xsd:element name="timeToLive" type="xsd:int" />
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://xmlapi.alcatel.com/common">
+      <xsd:import namespace="http://xmlapi.alcatel.com/framework/types" />
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:simpleType name="AlcServiceError">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="BAD_DATA_ACCESS_CONNECTION" />
+          <xsd:enumeration value="BAD_FRAMEWORK_SESSION_IDENTIFIER" />
+          <xsd:enumeration value="INVALID_OPERATION" />
+          <xsd:enumeration value="INVALID_SVC_SESSION_ID" />
+          <xsd:enumeration value="LICENSE_REQUIRED" />
+          <xsd:enumeration value="LOGIN_REQUIRED" />
+          <xsd:enumeration value="SERVICE_UNAVAILABLE" />
+          <xsd:enumeration value="SOAP_ACTION_REQUIRED" />
+          <xsd:enumeration value="BAD_PARAMETER_VALUE" />
+          <xsd:enumeration value="UNAUTHORIZED" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:complexType name="AlcServiceException">
+        <xsd:sequence>
+          <xsd:element name="fault" nillable="true" type="tns2:AlcServiceError" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:simpleType name="AlcUserIdType">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="LOGIN_NAME" />
+          <xsd:enumeration value="PHONE_NUMBER" />
+          <xsd:enumeration value="EMAIL" />
+        </xsd:restriction>
+      </xsd:simpleType>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="setSessionTimerValueRequest">
+    <wsdl:part name="pFwSessionId" type="xsd:string" />
+    <wsdl:part name="pValue" type="xsd:int" />
+  </wsdl:message>
+  <wsdl:message name="logoutResponse" />
+  <wsdl:message name="changePasswordRequest">
+    <wsdl:part name="pFwSessionId" type="xsd:string" />
+    <wsdl:part name="pOldPassword" type="xsd:string" />
+    <wsdl:part name="pNewPassword" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="changePasswordResponse" />
+  <wsdl:message name="loginSupervisorResponse">
+    <wsdl:part name="loginSupervisorReturn" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="loginRequest">
+    <wsdl:part name="pFwUser" type="xsd:string" />
+    <wsdl:part name="pFwPass" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="restartSessionTimerResponse" />
+  <wsdl:message name="AlcFwException">
+    <wsdl:part name="fwFault" type="tns1:AlcFwException" />
+  </wsdl:message>
+  <wsdl:message name="AlcServiceException">
+    <wsdl:part name="fault" type="tns2:AlcServiceException" />
+  </wsdl:message>
+  <wsdl:message name="logoutRequest">
+    <wsdl:part name="pFwSessionId" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="loginSupervisorRequest">
+    <wsdl:part name="pSupervisorLoginName" type="xsd:string" />
+    <wsdl:part name="pSupervisorPassword" type="xsd:string" />
+    <wsdl:part name="pSupervisedAccountId" type="xsd:string" />
+    <wsdl:part name="pSupervisedAccountIdType" type="tns2:AlcUserIdType" />
+  </wsdl:message>
+  <wsdl:message name="loginResponse">
+    <wsdl:part name="loginReturn" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="restartSessionTimerRequest">
+    <wsdl:part name="pFwSessionId" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="getUserInfoResponse">
+    <wsdl:part name="getUserInfoReturn" type="tns1:AlcUserInfo" />
+  </wsdl:message>
+  <wsdl:message name="getUserInfoRequest">
+    <wsdl:part name="pFwSessionId" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="setSessionTimerValueResponse" />
+  <wsdl:portType name="XmlApiFramework">
+    <wsdl:operation name="login" parameterOrder="pFwUser pFwPass">
+      <wsdl:input name="loginRequest" message="impl:loginRequest" />
+      <wsdl:output name="loginResponse" message="impl:loginResponse" />
+      <wsdl:fault name="AlcFwException" message="impl:AlcFwException" />
+      <wsdl:fault name="AlcServiceException" message="impl:AlcServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="loginSupervisor" parameterOrder="pSupervisorLoginName pSupervisorPassword pSupervisedAccountId pSupervisedAccountIdType">
+      <wsdl:input name="loginSupervisorRequest" message="impl:loginSupervisorRequest" />
+      <wsdl:output name="loginSupervisorResponse" message="impl:loginSupervisorResponse" />
+      <wsdl:fault name="AlcFwException" message="impl:AlcFwException" />
+      <wsdl:fault name="AlcServiceException" message="impl:AlcServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="logout" parameterOrder="pFwSessionId">
+      <wsdl:input name="logoutRequest" message="impl:logoutRequest" />
+      <wsdl:output name="logoutResponse" message="impl:logoutResponse" />
+      <wsdl:fault name="AlcServiceException" message="impl:AlcServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="changePassword" parameterOrder="pFwSessionId pOldPassword pNewPassword">
+      <wsdl:input name="changePasswordRequest" message="impl:changePasswordRequest" />
+      <wsdl:output name="changePasswordResponse" message="impl:changePasswordResponse" />
+      <wsdl:fault name="AlcFwException" message="impl:AlcFwException" />
+      <wsdl:fault name="AlcServiceException" message="impl:AlcServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="restartSessionTimer" parameterOrder="pFwSessionId">
+      <wsdl:input name="restartSessionTimerRequest" message="impl:restartSessionTimerRequest" />
+      <wsdl:output name="restartSessionTimerResponse" message="impl:restartSessionTimerResponse" />
+      <wsdl:fault name="AlcServiceException" message="impl:AlcServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="setSessionTimerValue" parameterOrder="pFwSessionId pValue">
+      <wsdl:input name="setSessionTimerValueRequest" message="impl:setSessionTimerValueRequest" />
+      <wsdl:output name="setSessionTimerValueResponse" message="impl:setSessionTimerValueResponse" />
+      <wsdl:fault name="AlcServiceException" message="impl:AlcServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="getUserInfo" parameterOrder="pFwSessionId">
+      <wsdl:input name="getUserInfoRequest" message="impl:getUserInfoRequest" />
+      <wsdl:output name="getUserInfoResponse" message="impl:getUserInfoResponse" />
+      <wsdl:fault name="AlcServiceException" message="impl:AlcServiceException" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="XmlApiFrameworkSoapBinding" type="impl:XmlApiFramework">
+    <wsdlsoap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <wsdl:operation name="login">
+      <wsdlsoap:operation soapAction="login" />
+      <wsdl:input name="loginRequest">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/framework" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="loginResponse">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/framework" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="AlcFwException">
+        <wsdlsoap:fault use="encoded" name="AlcFwException" namespace="http://xmlapi.alcatel.com/framework" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="AlcServiceException">
+        <wsdlsoap:fault use="encoded" name="AlcServiceException" namespace="http://xmlapi.alcatel.com/framework" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="loginSupervisor">
+      <wsdlsoap:operation soapAction="loginSupervisor" />
+      <wsdl:input name="loginSupervisorRequest">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/framework" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="loginSupervisorResponse">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/framework" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="AlcFwException">
+        <wsdlsoap:fault use="encoded" name="AlcFwException" namespace="http://xmlapi.alcatel.com/framework" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="AlcServiceException">
+        <wsdlsoap:fault use="encoded" name="AlcServiceException" namespace="http://xmlapi.alcatel.com/framework" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="logout">
+      <wsdlsoap:operation soapAction="logout" />
+      <wsdl:input name="logoutRequest">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/framework" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="logoutResponse">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/framework" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="AlcServiceException">
+        <wsdlsoap:fault use="encoded" name="AlcServiceException" namespace="http://xmlapi.alcatel.com/framework" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="changePassword">
+      <wsdlsoap:operation soapAction="changePassword" />
+      <wsdl:input name="changePasswordRequest">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/framework" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="changePasswordResponse">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/framework" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="AlcFwException">
+        <wsdlsoap:fault use="encoded" name="AlcFwException" namespace="http://xmlapi.alcatel.com/framework" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="AlcServiceException">
+        <wsdlsoap:fault use="encoded" name="AlcServiceException" namespace="http://xmlapi.alcatel.com/framework" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="restartSessionTimer">
+      <wsdlsoap:operation soapAction="restartSessionTimer" />
+      <wsdl:input name="restartSessionTimerRequest">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/framework" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="restartSessionTimerResponse">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/framework" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="AlcServiceException">
+        <wsdlsoap:fault use="encoded" name="AlcServiceException" namespace="http://xmlapi.alcatel.com/framework" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="setSessionTimerValue">
+      <wsdlsoap:operation soapAction="setSessionTimerValue" />
+      <wsdl:input name="setSessionTimerValueRequest">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/framework" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="setSessionTimerValueResponse">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/framework" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="AlcServiceException">
+        <wsdlsoap:fault use="encoded" name="AlcServiceException" namespace="http://xmlapi.alcatel.com/framework" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getUserInfo">
+      <wsdlsoap:operation soapAction="getUserInfo" />
+      <wsdl:input name="getUserInfoRequest">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/framework" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="getUserInfoResponse">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/framework" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="AlcServiceException">
+        <wsdlsoap:fault use="encoded" name="AlcServiceException" namespace="http://xmlapi.alcatel.com/framework" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="XmlApiFrameworkService">
+    <wsdl:port name="XmlApiFramework" binding="impl:XmlApiFrameworkSoapBinding">
+      <wsdlsoap:address location="http://192.168.0.110/api/services/5.0/XMLApiFramework" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

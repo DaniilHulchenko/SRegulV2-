@@ -1,0 +1,1880 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:intf="http://xmlapi.alcatel.com/phone" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns1="http://xmlapi.alcatel.com/phone/types" xmlns:tns2="http://xmlapi.alcatel.com/common" xmlns:impl="http://xmlapi.alcatel.com/phone" targetNamespace="http://xmlapi.alcatel.com/phone" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://xmlapi.alcatel.com/phone/types">
+      <xsd:import namespace="http://xmlapi.alcatel.com/common" />
+      <xsd:import namespace="http://xmlapi.alcatel.com/phone" />
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:simpleType name="AlcEventType">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="SESSION_CLOSED_EVENT" />
+          <xsd:enumeration value="CALL_STATE_EVENT" />
+          <xsd:enumeration value="NEW_SESSION_EVENT" />
+          <xsd:enumeration value="CONNECTION_DOWN_EVENT" />
+          <xsd:enumeration value="PHONE_SET_STATIC_STATE_EVENT" />
+          <xsd:enumeration value="UNANSWERED_CALL_EVENT" />
+          <xsd:enumeration value="NOMAD_STATE_EVENT" />
+          <xsd:enumeration value="LINE_STATE_EVENT" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:complexType name="AlcStatus">
+        <xsd:sequence>
+          <xsd:element name="code" type="xsd:int" />
+          <xsd:element name="label" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="AlcLogonResult">
+        <xsd:sequence>
+          <xsd:element name="firstName" nillable="true" type="xsd:string" />
+          <xsd:element name="lineNumber" nillable="true" type="xsd:string" />
+          <xsd:element name="name" nillable="true" type="xsd:string" />
+          <xsd:element name="registered" type="xsd:boolean" />
+          <xsd:element name="sessionId" nillable="true" type="xsd:string" />
+          <xsd:element name="status" nillable="true" type="tns1:AlcStatus" />
+          <xsd:element name="userName" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="AlcPhoneCapabilities">
+        <xsd:sequence>
+          <xsd:element name="callLog" type="xsd:boolean" />
+          <xsd:element name="callRecord" type="xsd:boolean" />
+          <xsd:element name="events" type="xsd:boolean" />
+          <xsd:element name="nomadic" type="xsd:boolean" />
+          <xsd:element name="repertory" type="xsd:boolean" />
+          <xsd:element name="status" nillable="true" type="tns1:AlcStatus" />
+          <xsd:element name="telephony" type="xsd:boolean" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:simpleType name="NomadMode">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="local" />
+          <xsd:enumeration value="privatePhone" />
+          <xsd:enumeration value="voip" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:complexType name="NomadicStateResult">
+        <xsd:sequence>
+          <xsd:element name="homeNumber" nillable="true" type="xsd:string" />
+          <xsd:element name="state" nillable="true" type="tns1:NomadMode" />
+          <xsd:element name="status" nillable="true" type="tns1:AlcStatus" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="AlcTelephonyCapabilities">
+        <xsd:sequence>
+          <xsd:element name="clearCall" type="xsd:boolean" />
+          <xsd:element name="clearCurrentCall" type="xsd:boolean" />
+          <xsd:element name="conferenceCall" type="xsd:boolean" />
+          <xsd:element name="conferenceCurrentCall" type="xsd:boolean" />
+          <xsd:element name="deflectCall" type="xsd:boolean" />
+          <xsd:element name="deflectCurrentCall" type="xsd:boolean" />
+          <xsd:element name="getCallState" type="xsd:boolean" />
+          <xsd:element name="getCurrentCallInfo" type="xsd:boolean" />
+          <xsd:element name="getLineState" type="xsd:boolean" />
+          <xsd:element name="holdCall" type="xsd:boolean" />
+          <xsd:element name="holdCurrentCall" type="xsd:boolean" />
+          <xsd:element name="makeBusinessCall" type="xsd:boolean" />
+          <xsd:element name="makeCall" type="xsd:boolean" />
+          <xsd:element name="makeCorrelatorCall" type="xsd:boolean" />
+          <xsd:element name="makePrivateCall" type="xsd:boolean" />
+          <xsd:element name="sendAssociateData" type="xsd:boolean" />
+          <xsd:element name="sendDTMF" type="xsd:boolean" />
+          <xsd:element name="status" nillable="true" type="tns1:AlcStatus" />
+          <xsd:element name="takeCall" type="xsd:boolean" />
+          <xsd:element name="takeCurrentCall" type="xsd:boolean" />
+          <xsd:element name="transferCall" type="xsd:boolean" />
+          <xsd:element name="transferCurrentCall" type="xsd:boolean" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:simpleType name="LineState">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="IN_SERVICE" />
+          <xsd:enumeration value="OUT_OF_SERVICE" />
+          <xsd:enumeration value="UNKNOWN" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:complexType name="LineStateResult">
+        <xsd:sequence>
+          <xsd:element name="state" nillable="true" type="tns1:LineState" />
+          <xsd:element name="status" nillable="true" type="tns1:AlcStatus" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:simpleType name="CallMode">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="normal" />
+          <xsd:enumeration value="private" />
+          <xsd:enumeration value="business" />
+          <xsd:enumeration value="correlator" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:complexType name="MakeCallInvoke">
+        <xsd:sequence>
+          <xsd:element name="associateData" nillable="true" type="xsd:hexBinary" />
+          <xsd:element name="businessCodeOrPIN" nillable="true" type="xsd:string" />
+          <xsd:element name="callee" nillable="true" type="xsd:string" />
+          <xsd:element name="mode" nillable="true" type="tns1:CallMode" />
+          <xsd:element name="secretCode" nillable="true" type="xsd:string" />
+          <xsd:element name="sessionId" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="SendAssociateDataInvoke">
+        <xsd:sequence>
+          <xsd:element name="associateData" nillable="true" type="xsd:hexBinary" />
+          <xsd:element name="sessionId" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="TakeCallInvoke">
+        <xsd:sequence>
+          <xsd:element name="callRef" type="xsd:long" />
+          <xsd:element name="sessionId" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="DeflectCallInvoke">
+        <xsd:sequence>
+          <xsd:element name="callRef" type="xsd:long" />
+          <xsd:element name="sessionId" nillable="true" type="xsd:string" />
+          <xsd:element name="targetPhoneNumber" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="DeflectCurrentCallInvoke">
+        <xsd:sequence>
+          <xsd:element name="sessionId" nillable="true" type="xsd:string" />
+          <xsd:element name="targetPhoneNumber" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="HoldCallInvoke">
+        <xsd:sequence>
+          <xsd:element name="callRef" type="xsd:long" />
+          <xsd:element name="sessionId" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ClearCallInvoke">
+        <xsd:sequence>
+          <xsd:element name="callRef" type="xsd:long" />
+          <xsd:element name="sessionId" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ConferenceCallInvoke">
+        <xsd:sequence>
+          <xsd:element name="activeCall" type="xsd:long" />
+          <xsd:element name="heldCall" type="xsd:long" />
+          <xsd:element name="sessionId" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="TransferCallInvoke">
+        <xsd:sequence>
+          <xsd:element name="activeCall" type="xsd:long" />
+          <xsd:element name="heldCall" type="xsd:long" />
+          <xsd:element name="sessionId" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="SendDTMF">
+        <xsd:sequence>
+          <xsd:element name="number" nillable="true" type="xsd:string" />
+          <xsd:element name="sessionId" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:simpleType name="CallState">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="init" />
+          <xsd:enumeration value="ringingIncoming" />
+          <xsd:enumeration value="ringingOutgoing" />
+          <xsd:enumeration value="active" />
+          <xsd:enumeration value="held" />
+          <xsd:enumeration value="conferenced" />
+          <xsd:enumeration value="recording" />
+          <xsd:enumeration value="waiting" />
+          <xsd:enumeration value="dialing" />
+          <xsd:enumeration value="releasing" />
+          <xsd:enumeration value="unreacheable" />
+          <xsd:enumeration value="busytone" />
+          <xsd:enumeration value="opereserved" />
+          <xsd:enumeration value="paging" />
+          <xsd:enumeration value="unknown" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:complexType name="CallInfoResult">
+        <xsd:sequence>
+          <xsd:element name="callIsPresent" type="xsd:boolean" />
+          <xsd:element name="callIsRedirect" type="xsd:boolean" />
+          <xsd:element name="initialCalledNumber" nillable="true" type="xsd:string" />
+          <xsd:element name="name" nillable="true" type="xsd:string" />
+          <xsd:element name="number" nillable="true" type="xsd:string" />
+          <xsd:element name="state" nillable="true" type="tns1:CallState" />
+          <xsd:element name="status" nillable="true" type="tns1:AlcStatus" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:simpleType name="MessageType">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="apology" />
+          <xsd:enumeration value="unknown" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:complexType name="Call">
+        <xsd:sequence>
+          <xsd:element name="callRef" type="xsd:long" />
+          <xsd:element name="correlator" nillable="true" type="xsd:hexBinary" />
+          <xsd:element name="message" nillable="true" type="xsd:string" />
+          <xsd:element name="msgtype" nillable="true" type="tns1:MessageType" />
+          <xsd:element name="name" nillable="true" type="xsd:string" />
+          <xsd:element name="number" nillable="true" type="xsd:string" />
+          <xsd:element name="state" nillable="true" type="tns1:CallState" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="AlcCallState">
+        <xsd:sequence>
+          <xsd:element name="calls" nillable="true" type="impl:ArrayOf_tns1_Call" />
+          <xsd:element name="status" nillable="true" type="tns1:AlcStatus" />
+          <xsd:element name="total" type="xsd:int" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="AlcCallRecordCapabilities">
+        <xsd:sequence>
+          <xsd:element name="continueRecord" type="xsd:boolean" />
+          <xsd:element name="getRecordState" type="xsd:boolean" />
+          <xsd:element name="pauseRecord" type="xsd:boolean" />
+          <xsd:element name="startRecord" type="xsd:boolean" />
+          <xsd:element name="status" nillable="true" type="tns1:AlcStatus" />
+          <xsd:element name="stopRecord" type="xsd:boolean" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:simpleType name="RecordState">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="enable" />
+          <xsd:enumeration value="disable" />
+          <xsd:enumeration value="inProgress" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:complexType name="RecordStateResult">
+        <xsd:sequence>
+          <xsd:element name="state" nillable="true" type="tns1:RecordState" />
+          <xsd:element name="status" nillable="true" type="tns1:AlcStatus" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="AlcCallLogCapabilities">
+        <xsd:sequence>
+          <xsd:element name="deleteAllCallLog" type="xsd:boolean" />
+          <xsd:element name="deleteCallLog" type="xsd:boolean" />
+          <xsd:element name="getCallLog" type="xsd:boolean" />
+          <xsd:element name="getNbUnansweredCall" type="xsd:boolean" />
+          <xsd:element name="modifyCallLog" type="xsd:boolean" />
+          <xsd:element name="status" nillable="true" type="tns1:AlcStatus" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="CallLogSelector">
+        <xsd:sequence>
+          <xsd:element name="filterActivated" type="xsd:int" />
+          <xsd:element name="index" type="xsd:int" />
+          <xsd:element name="nbItems" type="xsd:int" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="GetCallLogInvoke">
+        <xsd:sequence>
+          <xsd:element name="selector" nillable="true" type="tns1:CallLogSelector" />
+          <xsd:element name="sessionId" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="CallType">
+        <xsd:sequence>
+          <xsd:element name="answered" type="xsd:boolean" />
+          <xsd:element name="external" type="xsd:boolean" />
+          <xsd:element name="incoming" type="xsd:boolean" />
+          <xsd:element name="redirected" type="xsd:boolean" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:simpleType name="CallCause">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="none" />
+          <xsd:enumeration value="busy" />
+          <xsd:enumeration value="destNotObtainable" />
+          <xsd:enumeration value="dnd" />
+          <xsd:enumeration value="maintenance" />
+          <xsd:enumeration value="notAnswered" />
+          <xsd:enumeration value="overflow" />
+          <xsd:enumeration value="pickupIncoming" />
+          <xsd:enumeration value="pickupOutgoing" />
+          <xsd:enumeration value="pickupVictim" />
+          <xsd:enumeration value="redirectedIncoming" />
+          <xsd:enumeration value="redirectedOutgoing" />
+          <xsd:enumeration value="redirectedTo" />
+          <xsd:enumeration value="transfer" />
+          <xsd:enumeration value="trunksBusy" />
+          <xsd:enumeration value="blocked" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="NumberType">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="none" />
+          <xsd:enumeration value="boss" />
+          <xsd:enumeration value="secretary" />
+          <xsd:enumeration value="group" />
+          <xsd:enumeration value="associate" />
+          <xsd:enumeration value="voiceMail" />
+          <xsd:enumeration value="voiceMailConsult" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:complexType name="TypedNumber">
+        <xsd:sequence>
+          <xsd:element name="number" nillable="true" type="xsd:string" />
+          <xsd:element name="type" nillable="true" type="tns1:NumberType" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ItemId">
+        <xsd:sequence>
+          <xsd:element name="diffId" type="xsd:long" />
+          <xsd:element name="timeId" type="xsd:long" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="CallLogElt">
+        <xsd:sequence>
+          <xsd:element name="acknowledged" type="xsd:boolean" />
+          <xsd:element name="calltype" nillable="true" type="tns1:CallType" />
+          <xsd:element name="cause" nillable="true" type="tns1:CallCause" />
+          <xsd:element name="corrFirstName" nillable="true" type="xsd:string" />
+          <xsd:element name="corrName" nillable="true" type="xsd:string" />
+          <xsd:element name="corrNumber" nillable="true" type="tns1:TypedNumber" />
+          <xsd:element name="dateOfBegin" nillable="true" type="xsd:dateTime" />
+          <xsd:element name="dateOfConvers" nillable="true" type="xsd:dateTime" />
+          <xsd:element name="dateOfEnd" nillable="true" type="xsd:dateTime" />
+          <xsd:element name="dirNumber" nillable="true" type="xsd:string" />
+          <xsd:element name="initialNumber" nillable="true" type="tns1:TypedNumber" />
+          <xsd:element name="itemId" nillable="true" type="tns1:ItemId" />
+          <xsd:element name="newDestNumber" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="CallLogResult">
+        <xsd:sequence>
+          <xsd:element name="content" nillable="true" type="impl:ArrayOf_tns1_CallLogElt" />
+          <xsd:element name="status" nillable="true" type="tns1:AlcStatus" />
+          <xsd:element name="total" type="xsd:int" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="NbUCallResult">
+        <xsd:sequence>
+          <xsd:element name="nbUCall" type="xsd:int" />
+          <xsd:element name="status" nillable="true" type="tns1:AlcStatus" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ItemMod">
+        <xsd:sequence>
+          <xsd:element name="ack" type="xsd:boolean" />
+          <xsd:element name="id" nillable="true" type="tns1:ItemId" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ModifyCallLog">
+        <xsd:sequence>
+          <xsd:element name="content" nillable="true" type="impl:ArrayOf_tns1_ItemMod" />
+          <xsd:element name="sessionId" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="DeleteCallLog">
+        <xsd:sequence>
+          <xsd:element name="content" nillable="true" type="impl:ArrayOf_tns1_ItemId" />
+          <xsd:element name="sessionId" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="AlcRepertoryCapabilities">
+        <xsd:sequence>
+          <xsd:element name="createFolder" type="xsd:boolean" />
+          <xsd:element name="createRepertory" type="xsd:boolean" />
+          <xsd:element name="deleteFolder" type="xsd:boolean" />
+          <xsd:element name="deleteRepertory" type="xsd:boolean" />
+          <xsd:element name="getAllRepertory" type="xsd:boolean" />
+          <xsd:element name="getFolder" type="xsd:boolean" />
+          <xsd:element name="getRepertory" type="xsd:boolean" />
+          <xsd:element name="modifyFolder" type="xsd:boolean" />
+          <xsd:element name="modifyRepertory" type="xsd:boolean" />
+          <xsd:element name="moveFolder" type="xsd:boolean" />
+          <xsd:element name="moveRepertory" type="xsd:boolean" />
+          <xsd:element name="status" nillable="true" type="tns1:AlcStatus" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="GetRepertory">
+        <xsd:sequence>
+          <xsd:element name="folderId" nillable="true" type="tns1:ItemId" />
+          <xsd:element name="sessionId" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="RepertoryElt">
+        <xsd:sequence>
+          <xsd:element name="firstName" nillable="true" type="xsd:string" />
+          <xsd:element name="itemId" nillable="true" type="tns1:ItemId" />
+          <xsd:element name="name" nillable="true" type="xsd:string" />
+          <xsd:element name="number" nillable="true" type="xsd:string" />
+          <xsd:element name="translatedNumber" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="Folder">
+        <xsd:sequence>
+          <xsd:element name="folderName" nillable="true" type="xsd:string" />
+          <xsd:element name="itemId" nillable="true" type="tns1:ItemId" />
+          <xsd:element name="repertory" nillable="true" type="impl:ArrayOf_tns1_RepertoryElt" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="RepertoryResult">
+        <xsd:sequence>
+          <xsd:element name="folder" nillable="true" type="tns1:Folder" />
+          <xsd:element name="status" nillable="true" type="tns1:AlcStatus" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="RepertoryNode">
+        <xsd:sequence>
+          <xsd:element name="repertory" nillable="true" type="impl:ArrayOf_tns1_RepertoryElt" />
+          <xsd:element name="subRepertories" nillable="true" type="impl:ArrayOf_tns1_RepertoryNode" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="AllRepertoryResult">
+        <xsd:sequence>
+          <xsd:element name="repertoryNode" nillable="true" type="tns1:RepertoryNode" />
+          <xsd:element name="status" nillable="true" type="tns1:AlcStatus" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="CreateOrModifyRepertory">
+        <xsd:sequence>
+          <xsd:element name="elt" nillable="true" type="tns1:RepertoryElt" />
+          <xsd:element name="sessionId" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="CreateRepertoryResult">
+        <xsd:sequence>
+          <xsd:element name="itemId" nillable="true" type="tns1:ItemId" />
+          <xsd:element name="status" nillable="true" type="tns1:AlcStatus" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="DeleteRepertoryOrFolder">
+        <xsd:sequence>
+          <xsd:element name="itemId" nillable="true" type="tns1:ItemId" />
+          <xsd:element name="sessionId" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="MoveRepertoryOrFolder">
+        <xsd:sequence>
+          <xsd:element name="fatherId" nillable="true" type="tns1:ItemId" />
+          <xsd:element name="sessionId" nillable="true" type="xsd:string" />
+          <xsd:element name="sonId" nillable="true" type="tns1:ItemId" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="GetFolder">
+        <xsd:sequence>
+          <xsd:element name="sessionId" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="FolderNode">
+        <xsd:sequence>
+          <xsd:element name="folderName" nillable="true" type="xsd:string" />
+          <xsd:element name="itemId" nillable="true" type="tns1:ItemId" />
+          <xsd:element name="subFolders" nillable="true" type="impl:ArrayOf_tns1_FolderNode" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="FolderResult">
+        <xsd:sequence>
+          <xsd:element name="mainFolder" nillable="true" type="tns1:FolderNode" />
+          <xsd:element name="status" nillable="true" type="tns1:AlcStatus" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="CreateFolder">
+        <xsd:sequence>
+          <xsd:element name="fatherId" nillable="true" type="tns1:ItemId" />
+          <xsd:element name="folderName" nillable="true" type="xsd:string" />
+          <xsd:element name="sessionId" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="FolderElt">
+        <xsd:sequence>
+          <xsd:element name="folderName" nillable="true" type="xsd:string" />
+          <xsd:element name="itemId" nillable="true" type="tns1:ItemId" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ModifyFolder">
+        <xsd:sequence>
+          <xsd:element name="elt" nillable="true" type="tns1:FolderElt" />
+          <xsd:element name="fatherId" nillable="true" type="tns1:ItemId" />
+          <xsd:element name="sessionId" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://xmlapi.alcatel.com/phone">
+      <xsd:import namespace="http://xmlapi.alcatel.com/common" />
+      <xsd:import namespace="http://xmlapi.alcatel.com/phone/types" />
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:complexType name="ArrayOf_tns1_AlcEventType">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="tns1:AlcEventType[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOf_tns1_Call">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="tns1:Call[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOf_tns1_CallLogElt">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="tns1:CallLogElt[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOf_tns1_ItemMod">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="tns1:ItemMod[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOf_tns1_ItemId">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="tns1:ItemId[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOf_tns1_RepertoryElt">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="tns1:RepertoryElt[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOf_tns1_RepertoryNode">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="tns1:RepertoryNode[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOf_tns1_FolderNode">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="tns1:FolderNode[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+    </xsd:schema>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://xmlapi.alcatel.com/common">
+      <xsd:import namespace="http://xmlapi.alcatel.com/phone" />
+      <xsd:import namespace="http://xmlapi.alcatel.com/phone/types" />
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:simpleType name="AlcServiceError">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="BAD_DATA_ACCESS_CONNECTION" />
+          <xsd:enumeration value="BAD_FRAMEWORK_SESSION_IDENTIFIER" />
+          <xsd:enumeration value="INVALID_OPERATION" />
+          <xsd:enumeration value="INVALID_SVC_SESSION_ID" />
+          <xsd:enumeration value="LICENSE_REQUIRED" />
+          <xsd:enumeration value="LOGIN_REQUIRED" />
+          <xsd:enumeration value="SERVICE_UNAVAILABLE" />
+          <xsd:enumeration value="SOAP_ACTION_REQUIRED" />
+          <xsd:enumeration value="BAD_PARAMETER_VALUE" />
+          <xsd:enumeration value="UNAUTHORIZED" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:complexType name="AlcServiceException">
+        <xsd:sequence>
+          <xsd:element name="fault" nillable="true" type="tns2:AlcServiceError" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:simpleType name="AlcUserIdType">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="LOGIN_NAME" />
+          <xsd:enumeration value="PHONE_NUMBER" />
+          <xsd:enumeration value="EMAIL" />
+        </xsd:restriction>
+      </xsd:simpleType>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="deleteRepertoryResponse">
+    <wsdl:part name="deleteRepertoryReturn" type="tns1:AlcStatus" />
+  </wsdl:message>
+  <wsdl:message name="nomadLoginRequest">
+    <wsdl:part name="pFwSessionId" type="xsd:string" />
+    <wsdl:part name="sessionId" type="xsd:string" />
+    <wsdl:part name="homeNumber" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="conferenceCurrentCallRequest">
+    <wsdl:part name="pFwSessionId" type="xsd:string" />
+    <wsdl:part name="sessionId" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="nomadLogoutRequest">
+    <wsdl:part name="pFwSessionId" type="xsd:string" />
+    <wsdl:part name="sessionId" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="createRepertoryRequest">
+    <wsdl:part name="pFwSessionId" type="xsd:string" />
+    <wsdl:part name="invoke" type="tns1:CreateOrModifyRepertory" />
+  </wsdl:message>
+  <wsdl:message name="deleteRepertoryRequest">
+    <wsdl:part name="pFwSessionId" type="xsd:string" />
+    <wsdl:part name="invoke" type="tns1:DeleteRepertoryOrFolder" />
+  </wsdl:message>
+  <wsdl:message name="cancelConferenceResponse">
+    <wsdl:part name="cancelConferenceReturn" type="tns1:AlcStatus" />
+  </wsdl:message>
+  <wsdl:message name="getFolderRequest">
+    <wsdl:part name="pFwSessionId" type="xsd:string" />
+    <wsdl:part name="invoke" type="tns1:GetFolder" />
+  </wsdl:message>
+  <wsdl:message name="clearCallResponse">
+    <wsdl:part name="clearCallReturn" type="tns1:AlcStatus" />
+  </wsdl:message>
+  <wsdl:message name="getNbUnansweredCallResponse">
+    <wsdl:part name="getNbUnansweredCallReturn" type="tns1:NbUCallResult" />
+  </wsdl:message>
+  <wsdl:message name="getCurrentCallInfoResponse">
+    <wsdl:part name="getCurrentCallInfoReturn" type="tns1:CallInfoResult" />
+  </wsdl:message>
+  <wsdl:message name="modifyFolderRequest">
+    <wsdl:part name="pFwSessionId" type="xsd:string" />
+    <wsdl:part name="invoke" type="tns1:ModifyFolder" />
+  </wsdl:message>
+  <wsdl:message name="getFolderResponse">
+    <wsdl:part name="getFolderReturn" type="tns1:FolderResult" />
+  </wsdl:message>
+  <wsdl:message name="deleteFolderResponse">
+    <wsdl:part name="deleteFolderReturn" type="tns1:AlcStatus" />
+  </wsdl:message>
+  <wsdl:message name="AlcServiceException">
+    <wsdl:part name="fault" type="tns2:AlcServiceException" />
+  </wsdl:message>
+  <wsdl:message name="transferCallResponse">
+    <wsdl:part name="transferCallReturn" type="tns1:AlcStatus" />
+  </wsdl:message>
+  <wsdl:message name="getCallRecordCapabilitiesRequest">
+    <wsdl:part name="pFwSessionId" type="xsd:string" />
+    <wsdl:part name="sessionId" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="getRepertoryCapabilitiesRequest">
+    <wsdl:part name="pFwSessionId" type="xsd:string" />
+    <wsdl:part name="sessionId" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="loginResponse">
+    <wsdl:part name="loginReturn" type="tns1:AlcLogonResult" />
+  </wsdl:message>
+  <wsdl:message name="getCurrentCallInfoRequest">
+    <wsdl:part name="pFwSessionId" type="xsd:string" />
+    <wsdl:part name="sessionId" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="pauseRecordResponse">
+    <wsdl:part name="pauseRecordReturn" type="tns1:AlcStatus" />
+  </wsdl:message>
+  <wsdl:message name="deleteAllCallLogRequest">
+    <wsdl:part name="pFwSessionId" type="xsd:string" />
+    <wsdl:part name="sessionId" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="transferCurrentCallRequest">
+    <wsdl:part name="pFwSessionId" type="xsd:string" />
+    <wsdl:part name="sessionId" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="getAllRepertoryResponse">
+    <wsdl:part name="getAllRepertoryReturn" type="tns1:AllRepertoryResult" />
+  </wsdl:message>
+  <wsdl:message name="subscribeRequest">
+    <wsdl:part name="pFwSessionId" type="xsd:string" />
+    <wsdl:part name="sessionId" type="xsd:string" />
+    <wsdl:part name="notificationUrl" type="xsd:string" />
+    <wsdl:part name="undesirableEventTypes" type="impl:ArrayOf_tns1_AlcEventType" />
+  </wsdl:message>
+  <wsdl:message name="getLineStateResponse">
+    <wsdl:part name="getLineStateReturn" type="tns1:LineStateResult" />
+  </wsdl:message>
+  <wsdl:message name="makeCallRequest">
+    <wsdl:part name="pFwSessionId" type="xsd:string" />
+    <wsdl:part name="invoke" type="tns1:MakeCallInvoke" />
+  </wsdl:message>
+  <wsdl:message name="deleteCallLogResponse">
+    <wsdl:part name="deleteCallLogReturn" type="tns1:AlcStatus" />
+  </wsdl:message>
+  <wsdl:message name="holdCurrentCallResponse">
+    <wsdl:part name="holdCurrentCallReturn" type="tns1:AlcStatus" />
+  </wsdl:message>
+  <wsdl:message name="getRecordStateResponse">
+    <wsdl:part name="getRecordStateReturn" type="tns1:RecordStateResult" />
+  </wsdl:message>
+  <wsdl:message name="sendAssociateDataRequest">
+    <wsdl:part name="pFwSessionId" type="xsd:string" />
+    <wsdl:part name="invoke" type="tns1:SendAssociateDataInvoke" />
+  </wsdl:message>
+  <wsdl:message name="clearCurrentCallRequest">
+    <wsdl:part name="pFwSessionId" type="xsd:string" />
+    <wsdl:part name="sessionId" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="loginSupervisorRequest">
+    <wsdl:part name="pFwSessionId" type="xsd:string" />
+    <wsdl:part name="supervisedAccountId" type="xsd:string" />
+    <wsdl:part name="supervisedAccountIdType" type="tns2:AlcUserIdType" />
+    <wsdl:part name="notificationUrl" type="xsd:string" />
+    <wsdl:part name="undesirableEventTypes" type="impl:ArrayOf_tns1_AlcEventType" />
+  </wsdl:message>
+  <wsdl:message name="modifyCallLogRequest">
+    <wsdl:part name="pFwSessionId" type="xsd:string" />
+    <wsdl:part name="invoke" type="tns1:ModifyCallLog" />
+  </wsdl:message>
+  <wsdl:message name="createFolderResponse">
+    <wsdl:part name="createFolderReturn" type="tns1:AlcStatus" />
+  </wsdl:message>
+  <wsdl:message name="getRepertoryRequest">
+    <wsdl:part name="pFwSessionId" type="xsd:string" />
+    <wsdl:part name="invoke" type="tns1:GetRepertory" />
+  </wsdl:message>
+  <wsdl:message name="getRecordStateRequest">
+    <wsdl:part name="pFwSessionId" type="xsd:string" />
+    <wsdl:part name="sessionId" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="moveRepertoryRequest">
+    <wsdl:part name="pFwSessionId" type="xsd:string" />
+    <wsdl:part name="invoke" type="tns1:MoveRepertoryOrFolder" />
+  </wsdl:message>
+  <wsdl:message name="stopRecordResponse">
+    <wsdl:part name="stopRecordReturn" type="tns1:AlcStatus" />
+  </wsdl:message>
+  <wsdl:message name="getCallLogCapabilitiesRequest">
+    <wsdl:part name="pFwSessionId" type="xsd:string" />
+    <wsdl:part name="sessionId" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="getPhoneCapabilitiesRequest">
+    <wsdl:part name="pFwSessionId" type="xsd:string" />
+    <wsdl:part name="sessionId" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="deflectCallRequest">
+    <wsdl:part name="pFwSessionId" type="xsd:string" />
+    <wsdl:part name="invoke" type="tns1:DeflectCallInvoke" />
+  </wsdl:message>
+  <wsdl:message name="getNbUnansweredCallRequest">
+    <wsdl:part name="pFwSessionId" type="xsd:string" />
+    <wsdl:part name="sessionId" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="conferenceCurrentCallResponse">
+    <wsdl:part name="conferenceCurrentCallReturn" type="tns1:AlcStatus" />
+  </wsdl:message>
+  <wsdl:message name="continueRecordResponse">
+    <wsdl:part name="continueRecordReturn" type="tns1:AlcStatus" />
+  </wsdl:message>
+  <wsdl:message name="deleteFolderRequest">
+    <wsdl:part name="pFwSessionId" type="xsd:string" />
+    <wsdl:part name="invoke" type="tns1:DeleteRepertoryOrFolder" />
+  </wsdl:message>
+  <wsdl:message name="modifyFolderResponse">
+    <wsdl:part name="modifyFolderReturn" type="tns1:AlcStatus" />
+  </wsdl:message>
+  <wsdl:message name="getAllRepertoryRequest">
+    <wsdl:part name="pFwSessionId" type="xsd:string" />
+    <wsdl:part name="sessionId" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="deflectCurrentCallResponse">
+    <wsdl:part name="deflectCurrentCallReturn" type="tns1:AlcStatus" />
+  </wsdl:message>
+  <wsdl:message name="nomadLoginResponse">
+    <wsdl:part name="nomadLoginReturn" type="tns1:AlcStatus" />
+  </wsdl:message>
+  <wsdl:message name="subscribeResponse">
+    <wsdl:part name="subscribeReturn" type="tns1:AlcStatus" />
+  </wsdl:message>
+  <wsdl:message name="takeCallRequest">
+    <wsdl:part name="pFwSessionId" type="xsd:string" />
+    <wsdl:part name="invoke" type="tns1:TakeCallInvoke" />
+  </wsdl:message>
+  <wsdl:message name="createFolderRequest">
+    <wsdl:part name="pFwSessionId" type="xsd:string" />
+    <wsdl:part name="invoke" type="tns1:CreateFolder" />
+  </wsdl:message>
+  <wsdl:message name="takeCallResponse">
+    <wsdl:part name="takeCallReturn" type="tns1:AlcStatus" />
+  </wsdl:message>
+  <wsdl:message name="unsubscribeRequest">
+    <wsdl:part name="pFwSessionId" type="xsd:string" />
+    <wsdl:part name="sessionId" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="deflectCurrentCallRequest">
+    <wsdl:part name="pFwSessionId" type="xsd:string" />
+    <wsdl:part name="invoke" type="tns1:DeflectCurrentCallInvoke" />
+  </wsdl:message>
+  <wsdl:message name="getCallRecordCapabilitiesResponse">
+    <wsdl:part name="getCallRecordCapabilitiesReturn" type="tns1:AlcCallRecordCapabilities" />
+  </wsdl:message>
+  <wsdl:message name="getTelephonyCapabilitiesRequest">
+    <wsdl:part name="pFwSessionId" type="xsd:string" />
+    <wsdl:part name="sessionId" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="getRepertoryResponse">
+    <wsdl:part name="getRepertoryReturn" type="tns1:RepertoryResult" />
+  </wsdl:message>
+  <wsdl:message name="getCallLogCapabilitiesResponse">
+    <wsdl:part name="getCallLogCapabilitiesReturn" type="tns1:AlcCallLogCapabilities" />
+  </wsdl:message>
+  <wsdl:message name="modifyRepertoryResponse">
+    <wsdl:part name="modifyRepertoryReturn" type="tns1:AlcStatus" />
+  </wsdl:message>
+  <wsdl:message name="sendAssociateDataResponse">
+    <wsdl:part name="sendAssociateDataReturn" type="tns1:AlcStatus" />
+  </wsdl:message>
+  <wsdl:message name="deleteCallLogRequest">
+    <wsdl:part name="pFwSessionId" type="xsd:string" />
+    <wsdl:part name="invoke" type="tns1:DeleteCallLog" />
+  </wsdl:message>
+  <wsdl:message name="cancelConferenceRequest">
+    <wsdl:part name="pFwSessionId" type="xsd:string" />
+    <wsdl:part name="sessionId" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="deleteAllCallLogResponse">
+    <wsdl:part name="deleteAllCallLogReturn" type="tns1:AlcStatus" />
+  </wsdl:message>
+  <wsdl:message name="moveFolderResponse">
+    <wsdl:part name="moveFolderReturn" type="tns1:AlcStatus" />
+  </wsdl:message>
+  <wsdl:message name="deflectCallResponse">
+    <wsdl:part name="deflectCallReturn" type="tns1:AlcStatus" />
+  </wsdl:message>
+  <wsdl:message name="unsubscribeResponse">
+    <wsdl:part name="unsubscribeReturn" type="tns1:AlcStatus" />
+  </wsdl:message>
+  <wsdl:message name="stopRecordRequest">
+    <wsdl:part name="pFwSessionId" type="xsd:string" />
+    <wsdl:part name="sessionId" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="getNomadicStateRequest">
+    <wsdl:part name="pFwSessionId" type="xsd:string" />
+    <wsdl:part name="sessionId" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="transferCurrentCallResponse">
+    <wsdl:part name="transferCurrentCallReturn" type="tns1:AlcStatus" />
+  </wsdl:message>
+  <wsdl:message name="getCallStateRequest">
+    <wsdl:part name="pFwSessionId" type="xsd:string" />
+    <wsdl:part name="sessionId" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="modifyCallLogResponse">
+    <wsdl:part name="modifyCallLogReturn" type="tns1:AlcStatus" />
+  </wsdl:message>
+  <wsdl:message name="loginSupervisorResponse">
+    <wsdl:part name="loginSupervisorReturn" type="tns1:AlcLogonResult" />
+  </wsdl:message>
+  <wsdl:message name="nomadLogoutResponse">
+    <wsdl:part name="nomadLogoutReturn" type="tns1:AlcStatus" />
+  </wsdl:message>
+  <wsdl:message name="makeCallResponse">
+    <wsdl:part name="makeCallReturn" type="tns1:AlcStatus" />
+  </wsdl:message>
+  <wsdl:message name="getCallStateResponse">
+    <wsdl:part name="getCallStateReturn" type="tns1:AlcCallState" />
+  </wsdl:message>
+  <wsdl:message name="holdCallRequest">
+    <wsdl:part name="pFwSessionId" type="xsd:string" />
+    <wsdl:part name="invoke" type="tns1:HoldCallInvoke" />
+  </wsdl:message>
+  <wsdl:message name="getCallLogResponse">
+    <wsdl:part name="getCallLogReturn" type="tns1:CallLogResult" />
+  </wsdl:message>
+  <wsdl:message name="logoutRequest">
+    <wsdl:part name="pFwSessionId" type="xsd:string" />
+    <wsdl:part name="sessionId" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="transferCallRequest">
+    <wsdl:part name="pFwSessionId" type="xsd:string" />
+    <wsdl:part name="invoke" type="tns1:TransferCallInvoke" />
+  </wsdl:message>
+  <wsdl:message name="getRepertoryCapabilitiesResponse">
+    <wsdl:part name="getRepertoryCapabilitiesReturn" type="tns1:AlcRepertoryCapabilities" />
+  </wsdl:message>
+  <wsdl:message name="conferenceCallRequest">
+    <wsdl:part name="pFwSessionId" type="xsd:string" />
+    <wsdl:part name="invoke" type="tns1:ConferenceCallInvoke" />
+  </wsdl:message>
+  <wsdl:message name="startRecordResponse">
+    <wsdl:part name="startRecordReturn" type="tns1:AlcStatus" />
+  </wsdl:message>
+  <wsdl:message name="getTelephonyCapabilitiesResponse">
+    <wsdl:part name="getTelephonyCapabilitiesReturn" type="tns1:AlcTelephonyCapabilities" />
+  </wsdl:message>
+  <wsdl:message name="createRepertoryResponse">
+    <wsdl:part name="createRepertoryReturn" type="tns1:CreateRepertoryResult" />
+  </wsdl:message>
+  <wsdl:message name="continueRecordRequest">
+    <wsdl:part name="pFwSessionId" type="xsd:string" />
+    <wsdl:part name="sessionId" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="sendDTMFResponse">
+    <wsdl:part name="sendDTMFReturn" type="tns1:AlcStatus" />
+  </wsdl:message>
+  <wsdl:message name="logoutResponse">
+    <wsdl:part name="logoutReturn" type="tns1:AlcStatus" />
+  </wsdl:message>
+  <wsdl:message name="holdCallResponse">
+    <wsdl:part name="holdCallReturn" type="tns1:AlcStatus" />
+  </wsdl:message>
+  <wsdl:message name="loginRequest">
+    <wsdl:part name="pFwSessionId" type="xsd:string" />
+    <wsdl:part name="notificationUrl" type="xsd:string" />
+    <wsdl:part name="undesirableEventTypes" type="impl:ArrayOf_tns1_AlcEventType" />
+  </wsdl:message>
+  <wsdl:message name="pauseRecordRequest">
+    <wsdl:part name="pFwSessionId" type="xsd:string" />
+    <wsdl:part name="sessionId" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="getLineStateRequest">
+    <wsdl:part name="pFwSessionId" type="xsd:string" />
+    <wsdl:part name="sessionId" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="sendDTMFRequest">
+    <wsdl:part name="pFwSessionId" type="xsd:string" />
+    <wsdl:part name="invoke" type="tns1:SendDTMF" />
+  </wsdl:message>
+  <wsdl:message name="clearCurrentCallResponse">
+    <wsdl:part name="clearCurrentCallReturn" type="tns1:AlcStatus" />
+  </wsdl:message>
+  <wsdl:message name="conferenceCallResponse">
+    <wsdl:part name="conferenceCallReturn" type="tns1:AlcStatus" />
+  </wsdl:message>
+  <wsdl:message name="holdCurrentCallRequest">
+    <wsdl:part name="pFwSessionId" type="xsd:string" />
+    <wsdl:part name="sessionId" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="getNomadicStateResponse">
+    <wsdl:part name="getNomadicStateReturn" type="tns1:NomadicStateResult" />
+  </wsdl:message>
+  <wsdl:message name="getCallLogRequest">
+    <wsdl:part name="pFwSessionId" type="xsd:string" />
+    <wsdl:part name="invoke" type="tns1:GetCallLogInvoke" />
+  </wsdl:message>
+  <wsdl:message name="getPhoneCapabilitiesResponse">
+    <wsdl:part name="getPhoneCapabilitiesReturn" type="tns1:AlcPhoneCapabilities" />
+  </wsdl:message>
+  <wsdl:message name="takeCurrentCallResponse">
+    <wsdl:part name="takeCurrentCallReturn" type="tns1:AlcStatus" />
+  </wsdl:message>
+  <wsdl:message name="moveRepertoryResponse">
+    <wsdl:part name="moveRepertoryReturn" type="tns1:AlcStatus" />
+  </wsdl:message>
+  <wsdl:message name="modifyRepertoryRequest">
+    <wsdl:part name="pFwSessionId" type="xsd:string" />
+    <wsdl:part name="invoke" type="tns1:CreateOrModifyRepertory" />
+  </wsdl:message>
+  <wsdl:message name="startRecordRequest">
+    <wsdl:part name="pFwSessionId" type="xsd:string" />
+    <wsdl:part name="sessionId" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="moveFolderRequest">
+    <wsdl:part name="pFwSessionId" type="xsd:string" />
+    <wsdl:part name="invoke" type="tns1:MoveRepertoryOrFolder" />
+  </wsdl:message>
+  <wsdl:message name="clearCallRequest">
+    <wsdl:part name="pFwSessionId" type="xsd:string" />
+    <wsdl:part name="invoke" type="tns1:ClearCallInvoke" />
+  </wsdl:message>
+  <wsdl:message name="takeCurrentCallRequest">
+    <wsdl:part name="pFwSessionId" type="xsd:string" />
+    <wsdl:part name="sessionId" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:portType name="XmlPhone">
+    <wsdl:operation name="login" parameterOrder="pFwSessionId notificationUrl undesirableEventTypes">
+      <wsdl:input name="loginRequest" message="impl:loginRequest" />
+      <wsdl:output name="loginResponse" message="impl:loginResponse" />
+      <wsdl:fault name="AlcServiceException" message="impl:AlcServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="logout" parameterOrder="pFwSessionId sessionId">
+      <wsdl:input name="logoutRequest" message="impl:logoutRequest" />
+      <wsdl:output name="logoutResponse" message="impl:logoutResponse" />
+      <wsdl:fault name="AlcServiceException" message="impl:AlcServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="subscribe" parameterOrder="pFwSessionId sessionId notificationUrl undesirableEventTypes">
+      <wsdl:input name="subscribeRequest" message="impl:subscribeRequest" />
+      <wsdl:output name="subscribeResponse" message="impl:subscribeResponse" />
+      <wsdl:fault name="AlcServiceException" message="impl:AlcServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="loginSupervisor" parameterOrder="pFwSessionId supervisedAccountId supervisedAccountIdType notificationUrl undesirableEventTypes">
+      <wsdl:input name="loginSupervisorRequest" message="impl:loginSupervisorRequest" />
+      <wsdl:output name="loginSupervisorResponse" message="impl:loginSupervisorResponse" />
+      <wsdl:fault name="AlcServiceException" message="impl:AlcServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="getPhoneCapabilities" parameterOrder="pFwSessionId sessionId">
+      <wsdl:input name="getPhoneCapabilitiesRequest" message="impl:getPhoneCapabilitiesRequest" />
+      <wsdl:output name="getPhoneCapabilitiesResponse" message="impl:getPhoneCapabilitiesResponse" />
+      <wsdl:fault name="AlcServiceException" message="impl:AlcServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="unsubscribe" parameterOrder="pFwSessionId sessionId">
+      <wsdl:input name="unsubscribeRequest" message="impl:unsubscribeRequest" />
+      <wsdl:output name="unsubscribeResponse" message="impl:unsubscribeResponse" />
+      <wsdl:fault name="AlcServiceException" message="impl:AlcServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="getNomadicState" parameterOrder="pFwSessionId sessionId">
+      <wsdl:input name="getNomadicStateRequest" message="impl:getNomadicStateRequest" />
+      <wsdl:output name="getNomadicStateResponse" message="impl:getNomadicStateResponse" />
+      <wsdl:fault name="AlcServiceException" message="impl:AlcServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="nomadLogin" parameterOrder="pFwSessionId sessionId homeNumber">
+      <wsdl:input name="nomadLoginRequest" message="impl:nomadLoginRequest" />
+      <wsdl:output name="nomadLoginResponse" message="impl:nomadLoginResponse" />
+      <wsdl:fault name="AlcServiceException" message="impl:AlcServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="nomadLogout" parameterOrder="pFwSessionId sessionId">
+      <wsdl:input name="nomadLogoutRequest" message="impl:nomadLogoutRequest" />
+      <wsdl:output name="nomadLogoutResponse" message="impl:nomadLogoutResponse" />
+      <wsdl:fault name="AlcServiceException" message="impl:AlcServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="getTelephonyCapabilities" parameterOrder="pFwSessionId sessionId">
+      <wsdl:input name="getTelephonyCapabilitiesRequest" message="impl:getTelephonyCapabilitiesRequest" />
+      <wsdl:output name="getTelephonyCapabilitiesResponse" message="impl:getTelephonyCapabilitiesResponse" />
+      <wsdl:fault name="AlcServiceException" message="impl:AlcServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="getLineState" parameterOrder="pFwSessionId sessionId">
+      <wsdl:input name="getLineStateRequest" message="impl:getLineStateRequest" />
+      <wsdl:output name="getLineStateResponse" message="impl:getLineStateResponse" />
+      <wsdl:fault name="AlcServiceException" message="impl:AlcServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="makeCall" parameterOrder="pFwSessionId invoke">
+      <wsdl:input name="makeCallRequest" message="impl:makeCallRequest" />
+      <wsdl:output name="makeCallResponse" message="impl:makeCallResponse" />
+      <wsdl:fault name="AlcServiceException" message="impl:AlcServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="sendAssociateData" parameterOrder="pFwSessionId invoke">
+      <wsdl:input name="sendAssociateDataRequest" message="impl:sendAssociateDataRequest" />
+      <wsdl:output name="sendAssociateDataResponse" message="impl:sendAssociateDataResponse" />
+      <wsdl:fault name="AlcServiceException" message="impl:AlcServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="takeCall" parameterOrder="pFwSessionId invoke">
+      <wsdl:input name="takeCallRequest" message="impl:takeCallRequest" />
+      <wsdl:output name="takeCallResponse" message="impl:takeCallResponse" />
+      <wsdl:fault name="AlcServiceException" message="impl:AlcServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="takeCurrentCall" parameterOrder="pFwSessionId sessionId">
+      <wsdl:input name="takeCurrentCallRequest" message="impl:takeCurrentCallRequest" />
+      <wsdl:output name="takeCurrentCallResponse" message="impl:takeCurrentCallResponse" />
+      <wsdl:fault name="AlcServiceException" message="impl:AlcServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="deflectCall" parameterOrder="pFwSessionId invoke">
+      <wsdl:input name="deflectCallRequest" message="impl:deflectCallRequest" />
+      <wsdl:output name="deflectCallResponse" message="impl:deflectCallResponse" />
+      <wsdl:fault name="AlcServiceException" message="impl:AlcServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="deflectCurrentCall" parameterOrder="pFwSessionId invoke">
+      <wsdl:input name="deflectCurrentCallRequest" message="impl:deflectCurrentCallRequest" />
+      <wsdl:output name="deflectCurrentCallResponse" message="impl:deflectCurrentCallResponse" />
+      <wsdl:fault name="AlcServiceException" message="impl:AlcServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="holdCall" parameterOrder="pFwSessionId invoke">
+      <wsdl:input name="holdCallRequest" message="impl:holdCallRequest" />
+      <wsdl:output name="holdCallResponse" message="impl:holdCallResponse" />
+      <wsdl:fault name="AlcServiceException" message="impl:AlcServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="holdCurrentCall" parameterOrder="pFwSessionId sessionId">
+      <wsdl:input name="holdCurrentCallRequest" message="impl:holdCurrentCallRequest" />
+      <wsdl:output name="holdCurrentCallResponse" message="impl:holdCurrentCallResponse" />
+      <wsdl:fault name="AlcServiceException" message="impl:AlcServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="clearCall" parameterOrder="pFwSessionId invoke">
+      <wsdl:input name="clearCallRequest" message="impl:clearCallRequest" />
+      <wsdl:output name="clearCallResponse" message="impl:clearCallResponse" />
+      <wsdl:fault name="AlcServiceException" message="impl:AlcServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="clearCurrentCall" parameterOrder="pFwSessionId sessionId">
+      <wsdl:input name="clearCurrentCallRequest" message="impl:clearCurrentCallRequest" />
+      <wsdl:output name="clearCurrentCallResponse" message="impl:clearCurrentCallResponse" />
+      <wsdl:fault name="AlcServiceException" message="impl:AlcServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="conferenceCall" parameterOrder="pFwSessionId invoke">
+      <wsdl:input name="conferenceCallRequest" message="impl:conferenceCallRequest" />
+      <wsdl:output name="conferenceCallResponse" message="impl:conferenceCallResponse" />
+      <wsdl:fault name="AlcServiceException" message="impl:AlcServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="conferenceCurrentCall" parameterOrder="pFwSessionId sessionId">
+      <wsdl:input name="conferenceCurrentCallRequest" message="impl:conferenceCurrentCallRequest" />
+      <wsdl:output name="conferenceCurrentCallResponse" message="impl:conferenceCurrentCallResponse" />
+      <wsdl:fault name="AlcServiceException" message="impl:AlcServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="cancelConference" parameterOrder="pFwSessionId sessionId">
+      <wsdl:input name="cancelConferenceRequest" message="impl:cancelConferenceRequest" />
+      <wsdl:output name="cancelConferenceResponse" message="impl:cancelConferenceResponse" />
+      <wsdl:fault name="AlcServiceException" message="impl:AlcServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="transferCall" parameterOrder="pFwSessionId invoke">
+      <wsdl:input name="transferCallRequest" message="impl:transferCallRequest" />
+      <wsdl:output name="transferCallResponse" message="impl:transferCallResponse" />
+      <wsdl:fault name="AlcServiceException" message="impl:AlcServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="transferCurrentCall" parameterOrder="pFwSessionId sessionId">
+      <wsdl:input name="transferCurrentCallRequest" message="impl:transferCurrentCallRequest" />
+      <wsdl:output name="transferCurrentCallResponse" message="impl:transferCurrentCallResponse" />
+      <wsdl:fault name="AlcServiceException" message="impl:AlcServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="sendDTMF" parameterOrder="pFwSessionId invoke">
+      <wsdl:input name="sendDTMFRequest" message="impl:sendDTMFRequest" />
+      <wsdl:output name="sendDTMFResponse" message="impl:sendDTMFResponse" />
+      <wsdl:fault name="AlcServiceException" message="impl:AlcServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="getCurrentCallInfo" parameterOrder="pFwSessionId sessionId">
+      <wsdl:input name="getCurrentCallInfoRequest" message="impl:getCurrentCallInfoRequest" />
+      <wsdl:output name="getCurrentCallInfoResponse" message="impl:getCurrentCallInfoResponse" />
+      <wsdl:fault name="AlcServiceException" message="impl:AlcServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="getCallState" parameterOrder="pFwSessionId sessionId">
+      <wsdl:input name="getCallStateRequest" message="impl:getCallStateRequest" />
+      <wsdl:output name="getCallStateResponse" message="impl:getCallStateResponse" />
+      <wsdl:fault name="AlcServiceException" message="impl:AlcServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="getCallRecordCapabilities" parameterOrder="pFwSessionId sessionId">
+      <wsdl:input name="getCallRecordCapabilitiesRequest" message="impl:getCallRecordCapabilitiesRequest" />
+      <wsdl:output name="getCallRecordCapabilitiesResponse" message="impl:getCallRecordCapabilitiesResponse" />
+      <wsdl:fault name="AlcServiceException" message="impl:AlcServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="startRecord" parameterOrder="pFwSessionId sessionId">
+      <wsdl:input name="startRecordRequest" message="impl:startRecordRequest" />
+      <wsdl:output name="startRecordResponse" message="impl:startRecordResponse" />
+      <wsdl:fault name="AlcServiceException" message="impl:AlcServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="stopRecord" parameterOrder="pFwSessionId sessionId">
+      <wsdl:input name="stopRecordRequest" message="impl:stopRecordRequest" />
+      <wsdl:output name="stopRecordResponse" message="impl:stopRecordResponse" />
+      <wsdl:fault name="AlcServiceException" message="impl:AlcServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="pauseRecord" parameterOrder="pFwSessionId sessionId">
+      <wsdl:input name="pauseRecordRequest" message="impl:pauseRecordRequest" />
+      <wsdl:output name="pauseRecordResponse" message="impl:pauseRecordResponse" />
+      <wsdl:fault name="AlcServiceException" message="impl:AlcServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="continueRecord" parameterOrder="pFwSessionId sessionId">
+      <wsdl:input name="continueRecordRequest" message="impl:continueRecordRequest" />
+      <wsdl:output name="continueRecordResponse" message="impl:continueRecordResponse" />
+      <wsdl:fault name="AlcServiceException" message="impl:AlcServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="getRecordState" parameterOrder="pFwSessionId sessionId">
+      <wsdl:input name="getRecordStateRequest" message="impl:getRecordStateRequest" />
+      <wsdl:output name="getRecordStateResponse" message="impl:getRecordStateResponse" />
+      <wsdl:fault name="AlcServiceException" message="impl:AlcServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="getCallLogCapabilities" parameterOrder="pFwSessionId sessionId">
+      <wsdl:input name="getCallLogCapabilitiesRequest" message="impl:getCallLogCapabilitiesRequest" />
+      <wsdl:output name="getCallLogCapabilitiesResponse" message="impl:getCallLogCapabilitiesResponse" />
+      <wsdl:fault name="AlcServiceException" message="impl:AlcServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="getCallLog" parameterOrder="pFwSessionId invoke">
+      <wsdl:input name="getCallLogRequest" message="impl:getCallLogRequest" />
+      <wsdl:output name="getCallLogResponse" message="impl:getCallLogResponse" />
+      <wsdl:fault name="AlcServiceException" message="impl:AlcServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="getNbUnansweredCall" parameterOrder="pFwSessionId sessionId">
+      <wsdl:input name="getNbUnansweredCallRequest" message="impl:getNbUnansweredCallRequest" />
+      <wsdl:output name="getNbUnansweredCallResponse" message="impl:getNbUnansweredCallResponse" />
+      <wsdl:fault name="AlcServiceException" message="impl:AlcServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="modifyCallLog" parameterOrder="pFwSessionId invoke">
+      <wsdl:input name="modifyCallLogRequest" message="impl:modifyCallLogRequest" />
+      <wsdl:output name="modifyCallLogResponse" message="impl:modifyCallLogResponse" />
+      <wsdl:fault name="AlcServiceException" message="impl:AlcServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="deleteCallLog" parameterOrder="pFwSessionId invoke">
+      <wsdl:input name="deleteCallLogRequest" message="impl:deleteCallLogRequest" />
+      <wsdl:output name="deleteCallLogResponse" message="impl:deleteCallLogResponse" />
+      <wsdl:fault name="AlcServiceException" message="impl:AlcServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="deleteAllCallLog" parameterOrder="pFwSessionId sessionId">
+      <wsdl:input name="deleteAllCallLogRequest" message="impl:deleteAllCallLogRequest" />
+      <wsdl:output name="deleteAllCallLogResponse" message="impl:deleteAllCallLogResponse" />
+      <wsdl:fault name="AlcServiceException" message="impl:AlcServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="getRepertoryCapabilities" parameterOrder="pFwSessionId sessionId">
+      <wsdl:input name="getRepertoryCapabilitiesRequest" message="impl:getRepertoryCapabilitiesRequest" />
+      <wsdl:output name="getRepertoryCapabilitiesResponse" message="impl:getRepertoryCapabilitiesResponse" />
+      <wsdl:fault name="AlcServiceException" message="impl:AlcServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="getRepertory" parameterOrder="pFwSessionId invoke">
+      <wsdl:input name="getRepertoryRequest" message="impl:getRepertoryRequest" />
+      <wsdl:output name="getRepertoryResponse" message="impl:getRepertoryResponse" />
+      <wsdl:fault name="AlcServiceException" message="impl:AlcServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="getAllRepertory" parameterOrder="pFwSessionId sessionId">
+      <wsdl:input name="getAllRepertoryRequest" message="impl:getAllRepertoryRequest" />
+      <wsdl:output name="getAllRepertoryResponse" message="impl:getAllRepertoryResponse" />
+      <wsdl:fault name="AlcServiceException" message="impl:AlcServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="createRepertory" parameterOrder="pFwSessionId invoke">
+      <wsdl:input name="createRepertoryRequest" message="impl:createRepertoryRequest" />
+      <wsdl:output name="createRepertoryResponse" message="impl:createRepertoryResponse" />
+      <wsdl:fault name="AlcServiceException" message="impl:AlcServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="modifyRepertory" parameterOrder="pFwSessionId invoke">
+      <wsdl:input name="modifyRepertoryRequest" message="impl:modifyRepertoryRequest" />
+      <wsdl:output name="modifyRepertoryResponse" message="impl:modifyRepertoryResponse" />
+      <wsdl:fault name="AlcServiceException" message="impl:AlcServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="deleteRepertory" parameterOrder="pFwSessionId invoke">
+      <wsdl:input name="deleteRepertoryRequest" message="impl:deleteRepertoryRequest" />
+      <wsdl:output name="deleteRepertoryResponse" message="impl:deleteRepertoryResponse" />
+      <wsdl:fault name="AlcServiceException" message="impl:AlcServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="moveRepertory" parameterOrder="pFwSessionId invoke">
+      <wsdl:input name="moveRepertoryRequest" message="impl:moveRepertoryRequest" />
+      <wsdl:output name="moveRepertoryResponse" message="impl:moveRepertoryResponse" />
+      <wsdl:fault name="AlcServiceException" message="impl:AlcServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="getFolder" parameterOrder="pFwSessionId invoke">
+      <wsdl:input name="getFolderRequest" message="impl:getFolderRequest" />
+      <wsdl:output name="getFolderResponse" message="impl:getFolderResponse" />
+      <wsdl:fault name="AlcServiceException" message="impl:AlcServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="createFolder" parameterOrder="pFwSessionId invoke">
+      <wsdl:input name="createFolderRequest" message="impl:createFolderRequest" />
+      <wsdl:output name="createFolderResponse" message="impl:createFolderResponse" />
+      <wsdl:fault name="AlcServiceException" message="impl:AlcServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="modifyFolder" parameterOrder="pFwSessionId invoke">
+      <wsdl:input name="modifyFolderRequest" message="impl:modifyFolderRequest" />
+      <wsdl:output name="modifyFolderResponse" message="impl:modifyFolderResponse" />
+      <wsdl:fault name="AlcServiceException" message="impl:AlcServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="deleteFolder" parameterOrder="pFwSessionId invoke">
+      <wsdl:input name="deleteFolderRequest" message="impl:deleteFolderRequest" />
+      <wsdl:output name="deleteFolderResponse" message="impl:deleteFolderResponse" />
+      <wsdl:fault name="AlcServiceException" message="impl:AlcServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="moveFolder" parameterOrder="pFwSessionId invoke">
+      <wsdl:input name="moveFolderRequest" message="impl:moveFolderRequest" />
+      <wsdl:output name="moveFolderResponse" message="impl:moveFolderResponse" />
+      <wsdl:fault name="AlcServiceException" message="impl:AlcServiceException" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="XmlPhoneSoapBinding" type="impl:XmlPhone">
+    <wsdlsoap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <wsdl:operation name="login">
+      <wsdlsoap:operation soapAction="login" />
+      <wsdl:input name="loginRequest">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="loginResponse">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="AlcServiceException">
+        <wsdlsoap:fault use="encoded" name="AlcServiceException" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="logout">
+      <wsdlsoap:operation soapAction="logout" />
+      <wsdl:input name="logoutRequest">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="logoutResponse">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="AlcServiceException">
+        <wsdlsoap:fault use="encoded" name="AlcServiceException" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="subscribe">
+      <wsdlsoap:operation soapAction="subscribe" />
+      <wsdl:input name="subscribeRequest">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="subscribeResponse">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="AlcServiceException">
+        <wsdlsoap:fault use="encoded" name="AlcServiceException" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="loginSupervisor">
+      <wsdlsoap:operation soapAction="loginSupervisor" />
+      <wsdl:input name="loginSupervisorRequest">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="loginSupervisorResponse">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="AlcServiceException">
+        <wsdlsoap:fault use="encoded" name="AlcServiceException" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getPhoneCapabilities">
+      <wsdlsoap:operation soapAction="getPhoneCapabilities" />
+      <wsdl:input name="getPhoneCapabilitiesRequest">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="getPhoneCapabilitiesResponse">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="AlcServiceException">
+        <wsdlsoap:fault use="encoded" name="AlcServiceException" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="unsubscribe">
+      <wsdlsoap:operation soapAction="unsubscribe" />
+      <wsdl:input name="unsubscribeRequest">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="unsubscribeResponse">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="AlcServiceException">
+        <wsdlsoap:fault use="encoded" name="AlcServiceException" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getNomadicState">
+      <wsdlsoap:operation soapAction="getNomadicState" />
+      <wsdl:input name="getNomadicStateRequest">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="getNomadicStateResponse">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="AlcServiceException">
+        <wsdlsoap:fault use="encoded" name="AlcServiceException" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="nomadLogin">
+      <wsdlsoap:operation soapAction="nomadLogin" />
+      <wsdl:input name="nomadLoginRequest">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="nomadLoginResponse">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="AlcServiceException">
+        <wsdlsoap:fault use="encoded" name="AlcServiceException" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="nomadLogout">
+      <wsdlsoap:operation soapAction="nomadLogout" />
+      <wsdl:input name="nomadLogoutRequest">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="nomadLogoutResponse">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="AlcServiceException">
+        <wsdlsoap:fault use="encoded" name="AlcServiceException" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getTelephonyCapabilities">
+      <wsdlsoap:operation soapAction="getTelephonyCapabilities" />
+      <wsdl:input name="getTelephonyCapabilitiesRequest">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="getTelephonyCapabilitiesResponse">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="AlcServiceException">
+        <wsdlsoap:fault use="encoded" name="AlcServiceException" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getLineState">
+      <wsdlsoap:operation soapAction="getLineState" />
+      <wsdl:input name="getLineStateRequest">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="getLineStateResponse">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="AlcServiceException">
+        <wsdlsoap:fault use="encoded" name="AlcServiceException" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="makeCall">
+      <wsdlsoap:operation soapAction="makeCall" />
+      <wsdl:input name="makeCallRequest">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="makeCallResponse">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="AlcServiceException">
+        <wsdlsoap:fault use="encoded" name="AlcServiceException" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="sendAssociateData">
+      <wsdlsoap:operation soapAction="sendAssociateData" />
+      <wsdl:input name="sendAssociateDataRequest">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="sendAssociateDataResponse">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="AlcServiceException">
+        <wsdlsoap:fault use="encoded" name="AlcServiceException" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="takeCall">
+      <wsdlsoap:operation soapAction="takeCall" />
+      <wsdl:input name="takeCallRequest">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="takeCallResponse">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="AlcServiceException">
+        <wsdlsoap:fault use="encoded" name="AlcServiceException" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="takeCurrentCall">
+      <wsdlsoap:operation soapAction="takeCurrentCall" />
+      <wsdl:input name="takeCurrentCallRequest">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="takeCurrentCallResponse">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="AlcServiceException">
+        <wsdlsoap:fault use="encoded" name="AlcServiceException" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="deflectCall">
+      <wsdlsoap:operation soapAction="deflectCall" />
+      <wsdl:input name="deflectCallRequest">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="deflectCallResponse">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="AlcServiceException">
+        <wsdlsoap:fault use="encoded" name="AlcServiceException" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="deflectCurrentCall">
+      <wsdlsoap:operation soapAction="deflectCurrentCall" />
+      <wsdl:input name="deflectCurrentCallRequest">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="deflectCurrentCallResponse">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="AlcServiceException">
+        <wsdlsoap:fault use="encoded" name="AlcServiceException" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="holdCall">
+      <wsdlsoap:operation soapAction="holdCall" />
+      <wsdl:input name="holdCallRequest">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="holdCallResponse">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="AlcServiceException">
+        <wsdlsoap:fault use="encoded" name="AlcServiceException" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="holdCurrentCall">
+      <wsdlsoap:operation soapAction="holdCurrentCall" />
+      <wsdl:input name="holdCurrentCallRequest">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="holdCurrentCallResponse">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="AlcServiceException">
+        <wsdlsoap:fault use="encoded" name="AlcServiceException" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="clearCall">
+      <wsdlsoap:operation soapAction="clearCall" />
+      <wsdl:input name="clearCallRequest">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="clearCallResponse">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="AlcServiceException">
+        <wsdlsoap:fault use="encoded" name="AlcServiceException" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="clearCurrentCall">
+      <wsdlsoap:operation soapAction="clearCurrentCall" />
+      <wsdl:input name="clearCurrentCallRequest">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="clearCurrentCallResponse">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="AlcServiceException">
+        <wsdlsoap:fault use="encoded" name="AlcServiceException" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="conferenceCall">
+      <wsdlsoap:operation soapAction="conferenceCall" />
+      <wsdl:input name="conferenceCallRequest">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="conferenceCallResponse">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="AlcServiceException">
+        <wsdlsoap:fault use="encoded" name="AlcServiceException" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="conferenceCurrentCall">
+      <wsdlsoap:operation soapAction="conferenceCurrentCall" />
+      <wsdl:input name="conferenceCurrentCallRequest">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="conferenceCurrentCallResponse">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="AlcServiceException">
+        <wsdlsoap:fault use="encoded" name="AlcServiceException" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="cancelConference">
+      <wsdlsoap:operation soapAction="cancelConference" />
+      <wsdl:input name="cancelConferenceRequest">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="cancelConferenceResponse">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="AlcServiceException">
+        <wsdlsoap:fault use="encoded" name="AlcServiceException" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="transferCall">
+      <wsdlsoap:operation soapAction="transferCall" />
+      <wsdl:input name="transferCallRequest">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="transferCallResponse">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="AlcServiceException">
+        <wsdlsoap:fault use="encoded" name="AlcServiceException" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="transferCurrentCall">
+      <wsdlsoap:operation soapAction="transferCurrentCall" />
+      <wsdl:input name="transferCurrentCallRequest">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="transferCurrentCallResponse">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="AlcServiceException">
+        <wsdlsoap:fault use="encoded" name="AlcServiceException" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="sendDTMF">
+      <wsdlsoap:operation soapAction="sendDTMF" />
+      <wsdl:input name="sendDTMFRequest">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="sendDTMFResponse">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="AlcServiceException">
+        <wsdlsoap:fault use="encoded" name="AlcServiceException" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getCurrentCallInfo">
+      <wsdlsoap:operation soapAction="getCurrentCallInfo" />
+      <wsdl:input name="getCurrentCallInfoRequest">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="getCurrentCallInfoResponse">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="AlcServiceException">
+        <wsdlsoap:fault use="encoded" name="AlcServiceException" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getCallState">
+      <wsdlsoap:operation soapAction="getCallState" />
+      <wsdl:input name="getCallStateRequest">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="getCallStateResponse">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="AlcServiceException">
+        <wsdlsoap:fault use="encoded" name="AlcServiceException" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getCallRecordCapabilities">
+      <wsdlsoap:operation soapAction="getCallRecordCapabilities" />
+      <wsdl:input name="getCallRecordCapabilitiesRequest">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="getCallRecordCapabilitiesResponse">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="AlcServiceException">
+        <wsdlsoap:fault use="encoded" name="AlcServiceException" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="startRecord">
+      <wsdlsoap:operation soapAction="startRecord" />
+      <wsdl:input name="startRecordRequest">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="startRecordResponse">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="AlcServiceException">
+        <wsdlsoap:fault use="encoded" name="AlcServiceException" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="stopRecord">
+      <wsdlsoap:operation soapAction="stopRecord" />
+      <wsdl:input name="stopRecordRequest">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="stopRecordResponse">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="AlcServiceException">
+        <wsdlsoap:fault use="encoded" name="AlcServiceException" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="pauseRecord">
+      <wsdlsoap:operation soapAction="pauseRecord" />
+      <wsdl:input name="pauseRecordRequest">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="pauseRecordResponse">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="AlcServiceException">
+        <wsdlsoap:fault use="encoded" name="AlcServiceException" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="continueRecord">
+      <wsdlsoap:operation soapAction="continueRecord" />
+      <wsdl:input name="continueRecordRequest">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="continueRecordResponse">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="AlcServiceException">
+        <wsdlsoap:fault use="encoded" name="AlcServiceException" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getRecordState">
+      <wsdlsoap:operation soapAction="getRecordState" />
+      <wsdl:input name="getRecordStateRequest">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="getRecordStateResponse">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="AlcServiceException">
+        <wsdlsoap:fault use="encoded" name="AlcServiceException" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getCallLogCapabilities">
+      <wsdlsoap:operation soapAction="getCallLogCapabilities" />
+      <wsdl:input name="getCallLogCapabilitiesRequest">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="getCallLogCapabilitiesResponse">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="AlcServiceException">
+        <wsdlsoap:fault use="encoded" name="AlcServiceException" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getCallLog">
+      <wsdlsoap:operation soapAction="getCallLog" />
+      <wsdl:input name="getCallLogRequest">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="getCallLogResponse">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="AlcServiceException">
+        <wsdlsoap:fault use="encoded" name="AlcServiceException" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getNbUnansweredCall">
+      <wsdlsoap:operation soapAction="getNbUnansweredCall" />
+      <wsdl:input name="getNbUnansweredCallRequest">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="getNbUnansweredCallResponse">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="AlcServiceException">
+        <wsdlsoap:fault use="encoded" name="AlcServiceException" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="modifyCallLog">
+      <wsdlsoap:operation soapAction="modifyCallLog" />
+      <wsdl:input name="modifyCallLogRequest">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="modifyCallLogResponse">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="AlcServiceException">
+        <wsdlsoap:fault use="encoded" name="AlcServiceException" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="deleteCallLog">
+      <wsdlsoap:operation soapAction="deleteCallLog" />
+      <wsdl:input name="deleteCallLogRequest">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="deleteCallLogResponse">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="AlcServiceException">
+        <wsdlsoap:fault use="encoded" name="AlcServiceException" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="deleteAllCallLog">
+      <wsdlsoap:operation soapAction="deleteAllCallLog" />
+      <wsdl:input name="deleteAllCallLogRequest">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="deleteAllCallLogResponse">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="AlcServiceException">
+        <wsdlsoap:fault use="encoded" name="AlcServiceException" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getRepertoryCapabilities">
+      <wsdlsoap:operation soapAction="getRepertoryCapabilities" />
+      <wsdl:input name="getRepertoryCapabilitiesRequest">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="getRepertoryCapabilitiesResponse">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="AlcServiceException">
+        <wsdlsoap:fault use="encoded" name="AlcServiceException" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getRepertory">
+      <wsdlsoap:operation soapAction="getRepertory" />
+      <wsdl:input name="getRepertoryRequest">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="getRepertoryResponse">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="AlcServiceException">
+        <wsdlsoap:fault use="encoded" name="AlcServiceException" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getAllRepertory">
+      <wsdlsoap:operation soapAction="getAllRepertory" />
+      <wsdl:input name="getAllRepertoryRequest">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="getAllRepertoryResponse">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="AlcServiceException">
+        <wsdlsoap:fault use="encoded" name="AlcServiceException" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="createRepertory">
+      <wsdlsoap:operation soapAction="createRepertory" />
+      <wsdl:input name="createRepertoryRequest">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="createRepertoryResponse">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="AlcServiceException">
+        <wsdlsoap:fault use="encoded" name="AlcServiceException" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="modifyRepertory">
+      <wsdlsoap:operation soapAction="modifyRepertory" />
+      <wsdl:input name="modifyRepertoryRequest">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="modifyRepertoryResponse">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="AlcServiceException">
+        <wsdlsoap:fault use="encoded" name="AlcServiceException" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="deleteRepertory">
+      <wsdlsoap:operation soapAction="deleteRepertory" />
+      <wsdl:input name="deleteRepertoryRequest">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="deleteRepertoryResponse">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="AlcServiceException">
+        <wsdlsoap:fault use="encoded" name="AlcServiceException" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="moveRepertory">
+      <wsdlsoap:operation soapAction="moveRepertory" />
+      <wsdl:input name="moveRepertoryRequest">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="moveRepertoryResponse">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="AlcServiceException">
+        <wsdlsoap:fault use="encoded" name="AlcServiceException" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getFolder">
+      <wsdlsoap:operation soapAction="getFolder" />
+      <wsdl:input name="getFolderRequest">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="getFolderResponse">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="AlcServiceException">
+        <wsdlsoap:fault use="encoded" name="AlcServiceException" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="createFolder">
+      <wsdlsoap:operation soapAction="createFolder" />
+      <wsdl:input name="createFolderRequest">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="createFolderResponse">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="AlcServiceException">
+        <wsdlsoap:fault use="encoded" name="AlcServiceException" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="modifyFolder">
+      <wsdlsoap:operation soapAction="modifyFolder" />
+      <wsdl:input name="modifyFolderRequest">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="modifyFolderResponse">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="AlcServiceException">
+        <wsdlsoap:fault use="encoded" name="AlcServiceException" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="deleteFolder">
+      <wsdlsoap:operation soapAction="deleteFolder" />
+      <wsdl:input name="deleteFolderRequest">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="deleteFolderResponse">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="AlcServiceException">
+        <wsdlsoap:fault use="encoded" name="AlcServiceException" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="moveFolder">
+      <wsdlsoap:operation soapAction="moveFolder" />
+      <wsdl:input name="moveFolderRequest">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="moveFolderResponse">
+        <wsdlsoap:body use="encoded" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="AlcServiceException">
+        <wsdlsoap:fault use="encoded" name="AlcServiceException" namespace="http://xmlapi.alcatel.com/phone" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="XmlPhoneService">
+    <wsdl:port name="XmlPhone" binding="impl:XmlPhoneSoapBinding">
+      <wsdlsoap:address location="http://192.168.0.110/api/services/5.0/XMLPhone" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

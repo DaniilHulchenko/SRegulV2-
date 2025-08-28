@@ -1,0 +1,1068 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--<Import Project="..\packages\EntityFramework.6.3.0\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.3.0\build\EntityFramework.props')" />-->
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{37DD43DF-1149-4D7E-A0A4-2CE2351F06C5}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SRegulV2</RootNamespace>
+    <AssemblyName>SRegulV2</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <TargetFrameworkProfile />
+    <PublishUrl>\\192.168.0.30\Publications\SRegul\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Unc</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>true</UpdateRequired>
+    <MapFileExtensions>false</MapFileExtensions>
+    <ProductName>SOS Régulation V2</ProductName>
+    <SuiteName>SOS Régulation V2</SuiteName>
+    <MinimumRequiredVersion>1.0.0.97</MinimumRequiredVersion>
+    <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
+    <WebPage>publish.htm</WebPage>
+    <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
+    <ApplicationRevision>28</ApplicationRevision>
+    <ApplicationVersion>2.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <DocumentationFile>
+    </DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>x64</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>sos.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>ED51577C704DEFE4EA4A71166827DEE9CA1E0AB2</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>SRegul_1_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>false</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>SRegulV2.Program</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="BouncyCastle.Crypto, Version=1.9.0.0, Culture=neutral, PublicKeyToken=0e99375e54769942, processorArchitecture=MSIL">
+      <HintPath>..\packages\Portable.BouncyCastle.1.9.0\lib\net40\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="GMap.NET.Core, Version=2.1.7.0, Culture=neutral, PublicKeyToken=b85b9027b614afef, processorArchitecture=MSIL">
+      <HintPath>..\packages\GMap.NET.Core.2.1.7\lib\net472\GMap.NET.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="GMap.NET.WindowsForms, Version=2.1.7.0, Culture=neutral, PublicKeyToken=b85b9027b614afef, processorArchitecture=MSIL">
+      <HintPath>..\packages\GMap.NET.WinForms.2.1.7\lib\net472\GMap.NET.WindowsForms.dll</HintPath>
+    </Reference>
+    <Reference Include="GMap.NET.WindowsPresentation, Version=2.1.7.0, Culture=neutral, PublicKeyToken=b85b9027b614afef, processorArchitecture=MSIL">
+      <HintPath>..\packages\GMap.NET.WinPresentation.2.1.7\lib\net472\GMap.NET.WindowsPresentation.dll</HintPath>
+    </Reference>
+    <Reference Include="MailKit, Version=3.6.0.0, Culture=neutral, PublicKeyToken=4e064fe7c44a8f1b, processorArchitecture=MSIL">
+      <HintPath>..\packages\MailKit.3.6.0\lib\net47\MailKit.dll</HintPath>
+    </Reference>
+    <Reference Include="MimeKit, Version=3.6.0.0, Culture=neutral, PublicKeyToken=bede1c8a46c66814, processorArchitecture=MSIL">
+      <HintPath>..\packages\MimeKit.3.6.1\lib\net47\MimeKit.dll</HintPath>
+    </Reference>
+    <Reference Include="MySqlConnector, Version=2.0.0.0, Culture=neutral, PublicKeyToken=d33d3e53aa5f8c92, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySqlConnector.2.2.5\lib\net471\MySqlConnector.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.SqlClient, Version=4.6.1.5, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SqlClient.4.8.5\lib\net461\System.Data.SqlClient.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite, Version=1.0.117.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.117.0\lib\net46\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite.EF6, Version=1.0.117.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.EF6.1.0.117.0\lib\net46\System.Data.SQLite.EF6.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite.Linq, Version=1.0.117.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.Linq.1.0.117.0\lib\net46\System.Data.SQLite.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.6.0.0\lib\net461\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    </Reference>
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime, Version=4.1.1.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.4.3.1\lib\net462\System.Runtime.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Security.Principal.Windows, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Principal.Windows.5.0.0\lib\net461\System.Security.Principal.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CustomMenuBox1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CustomMenuBox1.Designer.cs">
+      <DependentUpon>CustomMenuBox1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EmailService.cs" />
+    <Compile Include="FAlarmeS.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FAlarmeS.Designer.cs">
+      <DependentUpon>FAlarmeS.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FAppelsRDV.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FAppelsRDV.designer.cs">
+      <DependentUpon>FAppelsRDV.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FApropos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FApropos.Designer.cs">
+      <DependentUpon>FApropos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FAssurance.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FAssurance.Designer.cs">
+      <DependentUpon>FAssurance.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FCarto.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FCarto.Designer.cs">
+      <DependentUpon>FCarto.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FDebloqueMed.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FDebloqueMed.Designer.cs">
+      <DependentUpon>FDebloqueMed.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FFacturesImpayees.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FFacturesImpayees.Designer.cs">
+      <DependentUpon>FFacturesImpayees.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FGestionDocuments.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FGestionDocuments.Designer.cs">
+      <DependentUpon>FGestionDocuments.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FHistoPda.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FHistoPda.Designer.cs">
+      <DependentUpon>FHistoPda.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FInfoAssure.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FInfoAssure.Designer.cs">
+      <DependentUpon>FInfoAssure.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FListeInfirmiere.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FListeInfirmiere.Designer.cs">
+      <DependentUpon>FListeInfirmiere.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FListeRDV.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FListeRDV.Designer.cs">
+      <DependentUpon>FListeRDV.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FListeVisiteOrg.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FListeVisiteOrg.Designer.cs">
+      <DependentUpon>FListeVisiteOrg.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FMailMutuaide.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FMailMutuaide.Designer.cs">
+      <DependentUpon>FMailMutuaide.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FMessage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FMessage.Designer.cs">
+      <DependentUpon>FMessage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FonctionsCTI.cs" />
+    <Compile Include="FOrganisation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FOrganisation.Designer.cs">
+      <DependentUpon>FOrganisation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FParametresDivers.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FParametresDivers.Designer.cs">
+      <DependentUpon>FParametresDivers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FParamUtilisateur.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FParamUtilisateur.Designer.cs">
+      <DependentUpon>FParamUtilisateur.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FRechAssurance.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FRechAssurance.Designer.cs">
+      <DependentUpon>FRechAssurance.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FRechCommune.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FRechCommune.Designer.cs">
+      <DependentUpon>FRechCommune.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FCommune.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FCommune.Designer.cs">
+      <DependentUpon>FCommune.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FCTI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FCTI.Designer.cs">
+      <DependentUpon>FCTI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FDialogRecherche.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FDialogRecherche.Designer.cs">
+      <DependentUpon>FDialogRecherche.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FGarde.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FGarde.Designer.cs">
+      <DependentUpon>FGarde.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FLogin.Designer.cs">
+      <DependentUpon>FLogin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FMedecin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FMedecin.Designer.cs">
+      <DependentUpon>FMedecin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FMotif.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FMotif.Designer.cs">
+      <DependentUpon>FMotif.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FonctionsAppels.cs" />
+    <Compile Include="Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FPassword.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FPassword.Designer.cs">
+      <DependentUpon>FPassword.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FProvenance.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FProvenance.Designer.cs">
+      <DependentUpon>FProvenance.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FRechDerniersAppels.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FRechDerniersAppels.Designer.cs">
+      <DependentUpon>FRechDerniersAppels.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FRechercheAppels.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FRechercheAppels.Designer.cs">
+      <DependentUpon>FRechercheAppels.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FRechEvenements.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FRechEvenements.Designer.cs">
+      <DependentUpon>FRechEvenements.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FRechMedecin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FRechMedecin.Designer.cs">
+      <DependentUpon>FRechMedecin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FRechMessages.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FRechMessages.Designer.cs">
+      <DependentUpon>FRechMessages.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FRechMotif.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FRechMotif.Designer.cs">
+      <DependentUpon>FRechMotif.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FRechProv.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FRechProv.Designer.cs">
+      <DependentUpon>FRechProv.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FRechRue.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FRechRue.Designer.cs">
+      <DependentUpon>FRechRue.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FRechSmartphone.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FRechSmartphone.Designer.cs">
+      <DependentUpon>FRechSmartphone.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FRechUtilisateur.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FRechUtilisateur.Designer.cs">
+      <DependentUpon>FRechUtilisateur.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FRessaisie.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FRessaisie.designer.cs">
+      <DependentUpon>FRessaisie.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FRue.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FRue.Designer.cs">
+      <DependentUpon>FRue.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FSmartphone.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FSmartphone.Designer.cs">
+      <DependentUpon>FSmartphone.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FTelUtils.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FTelUtils.Designer.cs">
+      <DependentUpon>FTelUtils.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FUtilisateur.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FUtilisateur.Designer.cs">
+      <DependentUpon>FUtilisateur.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FVisite.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FVisite.Designer.cs">
+      <DependentUpon>FVisite.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FGardeMedecin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FGardeMedecin.Designer.cs">
+      <DependentUpon>FGardeMedecin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FVisiteMed.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FVisiteMed.Designer.cs">
+      <DependentUpon>FVisiteMed.cs</DependentUpon>
+    </Compile>
+    <Compile Include="mouchard.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Encryption.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="RecupMailImap.cs" />
+    <Compile Include="Web References\XMLApiFramework\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\XMLPhone\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="CustomMenuBox1.resx">
+      <DependentUpon>CustomMenuBox1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FAlarmeS.resx">
+      <DependentUpon>FAlarmeS.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FAppelsRDV.resx">
+      <DependentUpon>FAppelsRDV.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FApropos.resx">
+      <DependentUpon>FApropos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FAssurance.resx">
+      <DependentUpon>FAssurance.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FCarto.resx">
+      <DependentUpon>FCarto.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FCommune.resx">
+      <DependentUpon>FCommune.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FCTI.resx">
+      <DependentUpon>FCTI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FDebloqueMed.resx">
+      <DependentUpon>FDebloqueMed.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FDialogRecherche.resx">
+      <DependentUpon>FDialogRecherche.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FFacturesImpayees.resx">
+      <DependentUpon>FFacturesImpayees.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FGarde.resx">
+      <DependentUpon>FGarde.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FGestionDocuments.resx">
+      <DependentUpon>FGestionDocuments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FHistoPda.resx">
+      <DependentUpon>FHistoPda.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FInfoAssure.resx">
+      <DependentUpon>FInfoAssure.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FListeInfirmiere.resx">
+      <DependentUpon>FListeInfirmiere.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FListeRDV.resx">
+      <DependentUpon>FListeRDV.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FListeVisiteOrg.resx">
+      <DependentUpon>FListeVisiteOrg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FLogin.resx">
+      <DependentUpon>FLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FMailMutuaide.resx">
+      <DependentUpon>FMailMutuaide.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FMedecin.resx">
+      <DependentUpon>FMedecin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FMessage.resx">
+      <DependentUpon>FMessage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FMotif.resx">
+      <DependentUpon>FMotif.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FOrganisation.resx">
+      <DependentUpon>FOrganisation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FParametresDivers.resx">
+      <DependentUpon>FParametresDivers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FParamUtilisateur.resx">
+      <DependentUpon>FParamUtilisateur.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FPassword.resx">
+      <DependentUpon>FPassword.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FProvenance.resx">
+      <DependentUpon>FProvenance.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FRechAssurance.resx">
+      <DependentUpon>FRechAssurance.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FRechCommune.resx">
+      <DependentUpon>FRechCommune.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FRechDerniersAppels.resx">
+      <DependentUpon>FRechDerniersAppels.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FRechercheAppels.resx">
+      <DependentUpon>FRechercheAppels.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FRechEvenements.resx">
+      <DependentUpon>FRechEvenements.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FRechMedecin.resx">
+      <DependentUpon>FRechMedecin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FRechMessages.resx">
+      <DependentUpon>FRechMessages.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FRechMotif.resx">
+      <DependentUpon>FRechMotif.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FRechProv.resx">
+      <DependentUpon>FRechProv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FRechRue.resx">
+      <DependentUpon>FRechRue.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FRechSmartphone.resx">
+      <DependentUpon>FRechSmartphone.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FRechUtilisateur.resx">
+      <DependentUpon>FRechUtilisateur.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FRessaisie.resx">
+      <DependentUpon>FRessaisie.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FRue.resx">
+      <DependentUpon>FRue.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FSmartphone.resx">
+      <DependentUpon>FSmartphone.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FTelUtils.resx">
+      <DependentUpon>FTelUtils.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FUtilisateur.resx">
+      <DependentUpon>FUtilisateur.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FVisite.resx">
+      <DependentUpon>FVisite.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FGardeMedecin.resx">
+      <DependentUpon>FGardeMedecin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FVisiteMed.resx">
+      <DependentUpon>FVisiteMed.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\app.manifest" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <None Include="SRegul_1_TemporaryKey.pfx" />
+    <None Include="SRegul_TemporaryKey.pfx" />
+    <None Include="Web References\XMLApiFramework\AlcUserInfo1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\XMLApiFramework\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\XMLApiFramework\XMLApiFramework.wsdl" />
+    <None Include="Web References\XMLPhone\AlcCallLogCapabilities1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\XMLPhone\AlcCallRecordCapabilities1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\XMLPhone\AlcCallState1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\XMLPhone\AlcLogonResult1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\XMLPhone\AlcPhoneCapabilities1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\XMLPhone\AlcRepertoryCapabilities1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\XMLPhone\AlcStatus1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\XMLPhone\AlcTelephonyCapabilities1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\XMLPhone\AllRepertoryResult1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\XMLPhone\CallInfoResult1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\XMLPhone\CallLogResult1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\XMLPhone\CreateRepertoryResult1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\XMLPhone\FolderResult1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\XMLPhone\LineStateResult1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\XMLPhone\NbUCallResult1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\XMLPhone\NomadicStateResult1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\XMLPhone\RecordStateResult1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\XMLPhone\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\XMLPhone\RepertoryResult1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\XMLPhone\XMLPhone.wsdl" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bajout.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\exit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bRecherche.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bvoir.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\marqueTransparent.png" />
+    <None Include="Resources\Gif_refresh_green.gif" />
+    <None Include="Resources\marqueBleuSOS.png" />
+    <None Include="Resources\voiture.png" />
+    <None Include="Resources\bGomme.png" />
+    <None Include="Resources\logoSwissMedic.png" />
+    <None Include="Resources\bconsentement.png" />
+    <None Include="Resources\BNvxDossierOn.png" />
+    <Content Include="Sons\Beep.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="x64\SQLite.Interop.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="x86\SQLite.Interop.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="Resources\Smiley_2ok.png" />
+    <None Include="Resources\smiley 1ok.png" />
+    <None Include="Resources\Smiley_Embete1.png" />
+    <None Include="Resources\centraleSos.png" />
+    <None Include="Resources\bouee.png" />
+    <None Include="Resources\cafe2.png" />
+    <None Include="Resources\marqueJaune.png" />
+    <None Include="Resources\marqueOrange.png" />
+    <None Include="Resources\marqueVert.png" />
+    <None Include="Resources\marqueRouge.png" />
+    <Content Include="Sons\Clavecin.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sons\come_and_get_your_love.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sons\huawei_sms.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sons\iphone_new_sound.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sons\iphone_sms_original.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sons\Le_bon_la_brute_et_le_truand.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sons\lg_timeless.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sons\message_recu.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sons\r2d2-sms.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sons\reflection-iPhone-x.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sons\Samsung-S9-Skyline.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sons\Si-tetais-la.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sons\sms-airport.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sons\Soupe_aux_choux.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sons\viber-original-sms.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="sos.ico" />
+    <None Include="Resources\bRappel.png" />
+    <None Include="Resources\Sos.png" />
+    <None Include="Resources\bVoirBleu.png" />
+    <None Include="Resources\bLoupeBleu.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferences Include="Web References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferenceUrl Include="http://192.168.0.110/api/services/5.0/XMLApiFramework%3fwsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\XMLApiFramework\</RelPath>
+      <UpdateFromURL>http://192.168.0.110/api/services/5.0/XMLApiFramework%3fwsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>SRegul_XMLApiFramework_XmlApiFrameworkService</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="http://192.168.0.110/api/services/5.0/XMLPhone%3fwsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\XMLPhone\</RelPath>
+      <UpdateFromURL>http://192.168.0.110/api/services/5.0/XMLPhone%3fwsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>SRegul_XMLPhone_XmlPhoneService</CachedSettingsPropName>
+    </WebReferenceUrl>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 et x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.NetCore.CoreRuntime.5.0.x64">
+      <Visible>False</Visible>
+      <ProductName>Runtime .NET 5.0.17 %28x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.NetCore.CoreRuntime.5.0.x86">
+      <Visible>False</Visible>
+      <ProductName>Runtime .NET 5.0.17 %28x86%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <PublishFile Include="MailKit.pdb">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Exclude</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>File</FileType>
+    </PublishFile>
+    <PublishFile Include="MimeKit.pdb">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Exclude</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>File</FileType>
+    </PublishFile>
+    <PublishFile Include="SRegulV2.pdb">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Exclude</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>File</FileType>
+    </PublishFile>
+    <PublishFile Include="System.Buffers">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="System.Data.SQLite">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="System.Data.SQLite.EF6">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="System.Data.SQLite.Linq">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="System.Diagnostics.DiagnosticSource">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="System.Memory">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="System.Numerics.Vectors">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="System.Runtime.CompilerServices.Unsafe">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="System.Threading.Tasks.Extensions">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="x64\SQLite.Interop.dll">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>File</FileType>
+    </PublishFile>
+    <PublishFile Include="x86\SQLite.Interop.dll">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Exclude</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>File</FileType>
+    </PublishFile>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>Ce projet fait référence à des packages NuGet qui sont manquants sur cet ordinateur. Activez l'option de restauration des packages NuGet pour les télécharger. Pour plus d'informations, consultez http://go.microsoft.com/fwlink/?LinkID=322105. Le fichier manquant est : {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+    <Error Condition="!Exists('..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.117.0\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.117.0\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
+  <Import Project="..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.117.0\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets" Condition="Exists('..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.117.0\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

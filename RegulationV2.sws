@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?PowerDesigner signature="Workspace" version="15.1.0.2850"?>
+<!-- Veuillez ne pas modifier ce fichier -->
+
+<Workspace>
+	<Local Expanded="Yes">
+		<Model ID="{BCF582BB-238E-42DE-B1AF-DC175B28B97F}" Loaded="No" Name="FicheVisite" Type="{FF4B6538-9856-42CF-B9B9-304ED370CEAA}" URL="../FicheConsultation/Analyse/FicheVisite/FicheVisite.prj"/>
+		<Model ID="{FD106CA7-9175-43EA-9559-6B38DD14C358}" Loaded="No" Name="ImpotSource" Type="{FF4B6538-9856-42CF-B9B9-304ED370CEAA}" URL="/DevX/Projets/Analyses/ImpotSource/ImpotSource.prj"/>
+		<Model ID="{0AA153AB-283B-4263-B124-DA472F2B6C78}" Loaded="No" Name="Regulation" Type="{FF4B6538-9856-42CF-B9B9-304ED370CEAA}" URL="../NvxRegulCore/NvxRegulCore.prj"/>
+		<Model ID="{7028B5D5-7A53-4123-848C-0052B602F766}" Name="NvxRegulCore" Selected="Yes" Type="{FF4B6538-9856-42CF-B9B9-304ED370CEAA}" URL="../NvxRegulCore/NvxRegulCore.prj"/>
+	</Local>
+	<BrowserModule Name="Référentiel"/>
+</Workspace>

@@ -1,0 +1,12 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="SRegulV2.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="SRegulV2_XMLApiFramework_XmlApiFrameworkService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://192.168.0.110/api/services/5.0/XMLApiFramework</Value>
+    </Setting>
+    <Setting Name="SRegulV2_XMLPhone_XmlPhoneService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://192.168.0.110/api/services/5.0/XMLPhone</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
