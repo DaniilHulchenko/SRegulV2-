@@ -415,6 +415,12 @@
     <Compile Include="FRechMedecin.Designer.cs">
       <DependentUpon>FRechMedecin.cs</DependentUpon>
     </Compile>
+    <Compile Include="FRechMedecinTraitant.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FRechMedecinTraitant.Designer.cs">
+      <DependentUpon>FRechMedecinTraitant.cs</DependentUpon>
+    </Compile>
     <Compile Include="FRechMessages.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -623,6 +629,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FRechMedecin.resx">
       <DependentUpon>FRechMedecin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FRechMedecinTraitant.resx">
+      <DependentUpon>FRechMedecinTraitant.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FRechMessages.resx">
       <DependentUpon>FRechMessages.cs</DependentUpon>
