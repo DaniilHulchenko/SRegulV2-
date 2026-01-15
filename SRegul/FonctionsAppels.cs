@@ -7183,7 +7183,7 @@ namespace SRegulV2
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = dbConnection;
 
-                string sqlstr0 = "SELECT Num, Nom, Prenom FROM medecinsville ORDER BY Nom";
+                string sqlstr0 = "SELECT * FROM medecinsville WHERE LTRIM(RTRIM(ISNULL(Nom, ''))) <> '' ORDER BY Nom";
 
                 cmd.CommandText = sqlstr0;
 
