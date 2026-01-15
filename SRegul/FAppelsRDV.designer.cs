@@ -633,7 +633,7 @@
             // 
             this.labelMedTraitant.AutoSize = true;
             this.labelMedTraitant.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelMedTraitant.Location = new System.Drawing.Point(5, 306);
+            this.labelMedTraitant.Location = new System.Drawing.Point(570, 306);
             this.labelMedTraitant.Name = "labelMedTraitant";
             this.labelMedTraitant.Size = new System.Drawing.Size(154, 16);
             this.labelMedTraitant.TabIndex = 69;
@@ -645,7 +645,7 @@
             this.tBoxMedTraitant.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tBoxMedTraitant.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tBoxMedTraitant.ForeColor = System.Drawing.SystemColors.Window;
-            this.tBoxMedTraitant.Location = new System.Drawing.Point(130, 307);
+            this.tBoxMedTraitant.Location = new System.Drawing.Point(630, 307);
             this.tBoxMedTraitant.Name = "tBoxMedTraitant";
             this.tBoxMedTraitant.Size = new System.Drawing.Size(207, 15);
             this.tBoxMedTraitant.TabIndex = 5;

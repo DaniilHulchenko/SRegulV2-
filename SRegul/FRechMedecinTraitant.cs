@@ -37,6 +37,7 @@ namespace SRegulV2
             listView1.Columns.Add("Code Médecin", 1);
             listView1.Columns.Add("Médecin", 150);
             listView1.View = View.Details;
+            ResizeMedecinColumn();
 
             IdMedecin = -1;
             NomMedecin = "";
@@ -45,6 +46,7 @@ namespace SRegulV2
 
         private void FRechMedecinTraitant_Load(object sender, EventArgs e)
         {
+            ResizeMedecinColumn();
             listView1.BeginUpdate();
             listView1.Items.Clear();
 
@@ -53,6 +55,20 @@ namespace SRegulV2
             AddMedecinsToList(dtMedecin);
 
             listView1.EndUpdate();
+        }
+
+        private void ResizeMedecinColumn()
+        {
+            if (listView1.Columns.Count < 2)
+            {
+                return;
+            }
+
+            int availableWidth = listView1.ClientSize.Width
+                - listView1.Columns[0].Width
+                - SystemInformation.VerticalScrollBarWidth
+                - 4;
+            listView1.Columns[1].Width = Math.Max(300, availableWidth);
         }
 
         private void tBMedecin_TextChanged(object sender, EventArgs e)
