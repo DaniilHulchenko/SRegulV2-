@@ -50,13 +50,7 @@ namespace SRegulV2
 
             dtMedecin = FonctionsAppels.ChargeListeMedecinsTraitants();
 
-            for (int i = 0; i < dtMedecin.Rows.Count; i++)
-            {
-                ListViewItem item = new ListViewItem(dtMedecin.Rows[i]["Num"].ToString());
-                item.SubItems.Add(dtMedecin.Rows[i]["Nom"].ToString() + " " + dtMedecin.Rows[i]["Prenom"].ToString());
-                item.Tag = new string[] { dtMedecin.Rows[i]["Nom"].ToString(), dtMedecin.Rows[i]["Prenom"].ToString() };
-                listView1.Items.Add(item);
-            }
+            AddMedecinsToList(dtMedecin);
 
             listView1.EndUpdate();
         }
@@ -73,13 +67,7 @@ namespace SRegulV2
                 listView1.BeginUpdate();
                 listView1.Items.Clear();
 
-                for (int i = 0; i < dtMedTrie.Rows.Count; i++)
-                {
-                    ListViewItem item = new ListViewItem(dtMedTrie.Rows[i]["Num"].ToString());
-                    item.SubItems.Add(dtMedTrie.Rows[i]["Nom"].ToString() + " " + dtMedTrie.Rows[i]["Prenom"].ToString());
-                    item.Tag = new string[] { dtMedTrie.Rows[i]["Nom"].ToString(), dtMedTrie.Rows[i]["Prenom"].ToString() };
-                    listView1.Items.Add(item);
-                }
+                AddMedecinsToList(dtMedTrie);
 
                 listView1.EndUpdate();
             }
@@ -124,6 +112,50 @@ namespace SRegulV2
         {
             DialogResult = DialogResult.Cancel;
             this.Close();
+        }
+
+        private void AddMedecinsToList(DataTable data)
+        {
+            for (int i = 0; i < data.Rows.Count; i++)
+            {
+                DataRow row = data.Rows[i];
+                string nom = row["Nom"].ToString().Trim();
+                if (string.IsNullOrWhiteSpace(nom))
+                {
+                    continue;
+                }
+
+                string prenom = row["Prenom"].ToString().Trim();
+                string location = GetMedecinLocation(row);
+                string nomPrenom = (nom + " " + prenom).Trim();
+                string displayName = string.IsNullOrWhiteSpace(location) ? nomPrenom : $"{nomPrenom} ({location})";
+
+                ListViewItem item = new ListViewItem(row["Num"].ToString());
+                item.SubItems.Add(displayName);
+                item.Tag = new string[] { nom, prenom };
+                listView1.Items.Add(item);
+            }
+        }
+
+        private static string GetMedecinLocation(DataRow row)
+        {
+            string[] locationFields = { "Commune", "Ville", "Localite", "Lieu" };
+
+            foreach (string field in locationFields)
+            {
+                if (!row.Table.Columns.Contains(field))
+                {
+                    continue;
+                }
+
+                string value = row[field].ToString().Trim();
+                if (!string.IsNullOrWhiteSpace(value))
+                {
+                    return value;
+                }
+            }
+
+            return "";
         }
     }
 }
