@@ -26,22 +26,6 @@ namespace SRegulV2
 
         private void bOk_Click(object sender, EventArgs e)
         {
-            if (TButilisateur.Text == "admin" && TBpass.Text == "admin")
-            {
-                user[0] = "0";
-                user[1] = "Admin";
-                user[2] = "Admin";
-                user[3] = "Admin";
-                user[4] = "";
-                user[5] = "";
-                user[6] = "";
-                user[7] = "";
-
-                this.DialogResult = DialogResult.OK;
-                return;
-            }
-
-
             chance += 1;
 
             //On vérifie le login

@@ -163,56 +163,31 @@ namespace SRegulV2
 
         private void bRappel_Click(object sender, EventArgs e)
         {
-            //Recup du n° de tel actuel du médecin
+            // Récupération du numéro de téléphone du médecin
             string NumTel = FonctionsAppels.RecupNumTelMedecin(CodeMedecin);
-            
-            //Si le CTI est actif
-            if (Form1.ActivationCTI == true && NumTel != "KO")
-            {                               
-                string[] Reponse = new string[2];
 
-                //On désactive le proxy HIN
-                FonctionsCTI.DesactiveProxyHIN();               
-
-                if (FonctionsCTI.toujoursConnecte(Form1.Token, Form1.Ligne) == "OK")
-                {   //On appelle
-                    FonctionsCTI.Appeler(NumTel, Form1.Token, Form1.Ligne);
-                }
-                else   //On se reconnecte (On est déconnecté)
+            if (!string.IsNullOrWhiteSpace(NumTel) && NumTel != "KO")
+            {
+                try
                 {
-                    Reponse = FonctionsCTI.LoguePoste(Form1.Utilisateur[5], Form1.Utilisateur[7]);
-
-                    if (Reponse[0] != "KO")
-                    {
-                        Form1.Token = Reponse[0];
-                        Form1.Ligne = Reponse[1];
-
-                        //Puis on passe l'appel
-                        FonctionsCTI.Appeler(NumTel, Form1.Token, Form1.Ligne);
-                    }
-                    else
-                    {
-                        MessageBox.Show("Erreur lors de la connexion au CTI. Vous pouvez continuer à travailler en désactivant le CTI dans le menu.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-
-                        //On affiche le smiley embeté
-                        pictureBox1.BackgroundImage = SRegulV2.Properties.Resources.Smiley_Embete1;
-                        pictureBox1.Visible = true;                                                                                 
-                    }
+                    System.Diagnostics.Process.Start("tel:" + NumTel);
                 }
-
-                //Puis on réactive le proxy HIN
-                FonctionsCTI.ReactiveProxyHIN();
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Échec de l’initiation de l’appel : " + ex.Message, "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             else
             {
-                MessageBox.Show("CTI non actif ou n° de Tel du médecin non trouvé.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                
-                //On affiche le smiley embeté
+                MessageBox.Show("Numéro de téléphone du médecin introuvable.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                // Afficher le smiley embêté
                 pictureBox1.BackgroundImage = SRegulV2.Properties.Resources.Smiley_Embete1;
-                pictureBox1.Visible = true;       
+                pictureBox1.Visible = true;
             }
         }
+
+
 
 
         //Pour fermer après 2 secondes

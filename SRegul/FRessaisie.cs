@@ -37,6 +37,10 @@ namespace SRegulV2
         private DateTime DTR = DateTime.Now;
         private DateTime DSL = DateTime.Now;
         private DateTime DFI = DateTime.Now;
+        private int IdMedecinTraitant = -1;
+        private string NomMedecinTraitant = "";
+        private string PrenomMedecinTraitant = "";
+        private bool MajMedecinTraitantTexte = false;
 
         private DataTable dt10DerAppels = new DataTable();
         private DataTable dtMedecin = new DataTable();      
@@ -80,7 +84,9 @@ namespace SRegulV2
                     //On créer maintenant la fiche de consultation
                     if (CreerFicheConsult(NumAppel, NumPersonne) == "KO")
                         MessageBox.Show("Un problème est survenu lors de la création de la Fiche de consultation pour cette visite.", "Création de la fiche de consultation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-               
+
+                    EnregistrerMedecinTraitant();
+
                     //On complete l'historique
                     if (CompleteHistorique(NumAppel) == "OK")
                     {
@@ -169,6 +175,12 @@ namespace SRegulV2
 
             //initialiser quelques champs
             cBoxPays.Text = "Suisse";
+            MajMedecinTraitantTexte = true;
+            tBoxMedTraitant.Text = "";
+            MajMedecinTraitantTexte = false;
+            IdMedecinTraitant = -1;
+            NomMedecinTraitant = "";
+            PrenomMedecinTraitant = "";
 
             //Si le CTI est actif on active le bouton
             if (Form1.ActivationCTI == true)
@@ -457,6 +469,44 @@ namespace SRegulV2
             return retour;
         }
 
+        private void EnregistrerMedecinTraitant()
+        {
+            if (NumPersonne == -1)
+            {
+                return;
+            }
+
+            FonctionsAppels.MajMedecinTraitant(NumPersonne, IdMedecinTraitant);
+        }
+
+        private void ChargerMedecinTraitant(int numPersonne)
+        {
+            MajMedecinTraitantTexte = true;
+
+            int idMedecin;
+            string nom;
+            string prenom;
+
+            if (FonctionsAppels.GetMedecinTraitant(numPersonne, out idMedecin, out nom, out prenom))
+            {
+                IdMedecinTraitant = idMedecin;
+                NomMedecinTraitant = nom;
+                PrenomMedecinTraitant = prenom;
+                tBoxMedTraitant.Text = (nom + " " + prenom).Trim();
+                tBoxMedTraitant.SelectionStart = 0;
+                tBoxMedTraitant.SelectionLength = 0;
+            }
+            else
+            {
+                IdMedecinTraitant = -1;
+                NomMedecinTraitant = "";
+                PrenomMedecinTraitant = "";
+                tBoxMedTraitant.Text = "";
+            }
+
+            MajMedecinTraitantTexte = false;
+        }
+
                      
         //Affichage d'une boite de dialogue pour retourner le résultat de la recherche (personne)
         private int DialAfficheRecherche(DataTable dtRecherche)
@@ -614,7 +664,9 @@ namespace SRegulV2
             if (dtPersonne.Rows[index]["PatientRemarquable"].ToString() == "O")
             {
                 PeuplerChampsRemarque(NumPersonne);
-            }      
+            }
+
+            ChargerMedecinTraitant(NumPersonne);
                        
 
             //Enfin pour le n° de carte d'assurance, on bloque la saisie si un n° existe déjà
@@ -874,6 +926,64 @@ namespace SRegulV2
                 //On stop l'entrée du caractère dans le controle
                 e.Handled = true;
             }
+        }
+
+        private void tBoxMedTraitant_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F5)
+            {
+                FRechMedecinTraitant fRechMedecinTraitant = new FRechMedecinTraitant();
+
+                if (fRechMedecinTraitant.ShowDialog() == DialogResult.OK)
+                {
+                    IdMedecinTraitant = fRechMedecinTraitant.idMedecin;
+                    NomMedecinTraitant = fRechMedecinTraitant.nomMedecin;
+                    PrenomMedecinTraitant = fRechMedecinTraitant.prenomMedecin;
+
+                    MajMedecinTraitantTexte = true;
+                    tBoxMedTraitant.Text = (NomMedecinTraitant + " " + PrenomMedecinTraitant).Trim();
+                    tBoxMedTraitant.SelectionStart = 0;
+                    tBoxMedTraitant.SelectionLength = 0;
+                    MajMedecinTraitantTexte = false;
+                }
+
+                fRechMedecinTraitant.Dispose();
+            }
+            else if (e.KeyCode == Keys.Delete || e.KeyCode == Keys.Back)
+            {
+                MajMedecinTraitantTexte = true;
+                tBoxMedTraitant.Text = "";
+                MajMedecinTraitantTexte = false;
+
+                IdMedecinTraitant = -1;
+                NomMedecinTraitant = "";
+                PrenomMedecinTraitant = "";
+            }
+        }
+
+        private void tBoxMedTraitant_TextChanged(object sender, EventArgs e)
+        {
+            if (MajMedecinTraitantTexte)
+            {
+                return;
+            }
+
+            if (tBoxMedTraitant.Text == "")
+            {
+                IdMedecinTraitant = -1;
+                NomMedecinTraitant = "";
+                PrenomMedecinTraitant = "";
+            }
+        }
+
+        private void tBoxMedTraitant_Enter(object sender, EventArgs e)
+        {
+            tBoxMedTraitant.BackColor = Color.DarkGreen;
+        }
+
+        private void tBoxMedTraitant_Leave(object sender, EventArgs e)
+        {
+            tBoxMedTraitant.BackColor = SystemColors.ControlDark;
         }
 
 
@@ -2147,11 +2257,8 @@ namespace SRegulV2
         {
             string Retour = "KO";
 
-            //On commence par rechercher le médecin traitant de la personne (Stopé à la demande du secrétariat)
-            string[,] MedTraitant = new string[1, 2];
-            MedTraitant[0, 0] = "";
-            MedTraitant[0, 1] = "";            
-            //MedTraitant = FonctionsAppels.RechercheMedTraitant(NumPersonne);
+            string nomMedTraitant = NomMedecinTraitant;
+            string prenomMedTraitant = PrenomMedecinTraitant;
 
             //Chaine de connection... ici on attaque MariaDB
             string connex = ConfigurationManager.ConnectionStrings["Connection_Base_FicheVisite"].ToString();
@@ -2200,7 +2307,7 @@ namespace SRegulV2
 
                 //****correspondance***               
                 SqlStr2 = "INSERT INTO correspondance ";
-                SqlStr2 += " (Num_Appel, NomMedTraitant, PrenomMedTraitant, ORGTA, ORGAideDom) VALUES(" + NumAppel.ToString() + ",'" + MedTraitant[0, 0] + "','" + MedTraitant[0, 1] + "', 0,0)";
+                SqlStr2 += " (Num_Appel, NomMedTraitant, PrenomMedTraitant, ORGTA, ORGAideDom) VALUES(" + NumAppel.ToString() + ",'" + nomMedTraitant.Replace("'", "''") + "','" + prenomMedTraitant.Replace("'", "''") + "', 0,0)";
 
 
                 //****assurances*****                              

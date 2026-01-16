@@ -39,6 +39,10 @@ namespace SRegulV2
         private bool FactureImpayee = false;            //Y a t'il des factures impayées?    
         private string IdUnilab = "";
         private DateTime? DateAccord = null;        //A t'il déjà donné son accord pour la LPD
+        private int IdMedecinTraitant = -1;
+        private string NomMedecinTraitant = "";
+        private string PrenomMedecinTraitant = "";
+        private bool MajMedecinTraitantTexte = false;
         //private DataTable dt10DerAppels = new DataTable();
         private DataTable dt20DerAppels = new DataTable();
 
@@ -169,8 +173,10 @@ namespace SRegulV2
                                 if (NumAppel != -1)  //Tout c'est bien passé
                                 {
                                     //On créer maintenant la fiche de consultation
-                                    if (CreerFicheConsult(NumAppel, NumPersonne) == "KO")                                    
+                                if (CreerFicheConsult(NumAppel, NumPersonne) == "KO")
                                         MessageBox.Show("Un problème est survenu lors de la création de la Fiche de consultation pour cette visite.", "Création de la fiche de consultation", MessageBoxButtons.OK, MessageBoxIcon.Warning);                                    
+
+                                    EnregistrerMedecinTraitant();
                                                                                                           
                                     mouchard.evenement("Création d''un doublon!, appel n°: " + NumAppel +
                                         " de " + tBoxNom.Text + " " + tBoxPrenom.Text + " n° pers. :" + NumPersonne + " né le " + mTBoxDateNaiss.Text + " Adr: " + tBRue.Text.Replace("'", "''").Replace(",", ",,") + " " + tBoxNumRue.Text + " " +
@@ -198,6 +204,8 @@ namespace SRegulV2
                                 if (CreerFicheConsult(NumAppel, NumPersonne) == "KO")                                
                                     MessageBox.Show("Un problème est survenu lors de la création de la Fiche de consultation pour cette visite.", "Création de la fiche de consultation", MessageBoxButtons.OK, MessageBoxIcon.Warning);                                
 
+                                EnregistrerMedecinTraitant();
+
                                 mouchard.evenement("Création appel n°: " + NumAppel +
                                     " de " + tBoxNom.Text + " " + tBoxPrenom.Text + " n° pers. :" + NumPersonne + " né le " + mTBoxDateNaiss.Text + " Adr: " + tBRue.Text.Replace("'", "''").Replace(",", ",,") + " " + tBoxNumRue.Text + " " +
                                     tBoxCP.Text + " " + tBoxCommune.Text.Replace("'", "''").Replace(",", ",,"), Form1.Utilisateur[2].ToString() + " " + Form1.Utilisateur[3].ToString());   //log                        
@@ -218,6 +226,8 @@ namespace SRegulV2
                             //On créer maintenant la fiche de consultation
                             if (CreerFicheConsult(NumAppel, NumPersonne) == "KO")                            
                                 MessageBox.Show("Un problème est survenu lors de la création de la Fiche de consultation pour cette visite.", "Création de la fiche de consultation", MessageBoxButtons.OK, MessageBoxIcon.Warning);                            
+
+                            EnregistrerMedecinTraitant();
 
                             mouchard.evenement("Création appel n°: " + NumAppel +
                                 " de " + tBoxNom.Text + " " + tBoxPrenom.Text + " n° pers. :" + NumPersonne + " né le " + mTBoxDateNaiss.Text +" Adr: " + tBRue.Text.Replace("'", "''").Replace(",", ",,") + " " + tBoxNumRue.Text + " " +
@@ -260,6 +270,8 @@ namespace SRegulV2
                                     IdUnilab = FonctionsAppels.ToUnixTime(DateTime.Now).ToString();
 
                                 MajAppel();   //Maj de l'appel
+
+                                EnregistrerMedecinTraitant();
                                 
                                 mouchard.evenement("Création d''un doublon pendant la maj de l''appel!, appel n°: " + NumVisite +
                                         " de " + tBoxNom.Text + " " + tBoxPrenom.Text + " n° pers. :" + NumPersonne + " né le " + mTBoxDateNaiss.Text + " Adr: " + tBRue.Text.Replace("'", "''").Replace(",", ",,") + " " + tBoxNumRue.Text + " " +
@@ -280,6 +292,8 @@ namespace SRegulV2
 
                             MajAppel();   //Maj de l'appel                                                      
 
+                            EnregistrerMedecinTraitant();
+
                             mouchard.evenement("Maj de l'appel n° " + NumVisite + " concernant " + tBoxNom.Text + " " + tBoxPrenom.Text + " n° pers. :" + NumPersonne + " né le " + mTBoxDateNaiss.Text + " Adr: " + tBRue.Text.Replace("'", "''").Replace(",", ",,") + " " + tBoxNumRue.Text + " " +
                                     tBoxCP.Text + " " + tBoxCommune.Text.Replace("'", "''").Replace(",", ",,"), Form1.Utilisateur[2].ToString() + " " + Form1.Utilisateur[3].ToString());   //log                        
 
@@ -293,6 +307,8 @@ namespace SRegulV2
                     else   //personne déjà connue
                     {
                         MajAppel();  //Maj de l'appel
+
+                        EnregistrerMedecinTraitant();
                        
                         mouchard.evenement("Maj de l'appel n° " + NumVisite + " concernant " + tBoxNom.Text + " " + tBoxPrenom.Text + " n° pers. :" + NumPersonne +" né le " + mTBoxDateNaiss.Text + " Adr: " + tBRue.Text.Replace("'", "''").Replace(",", ",,") + " " + tBoxNumRue.Text + " " +
                                 tBoxCP.Text + " " + tBoxCommune.Text.Replace("'", "''").Replace(",", ",,"), Form1.Utilisateur[2].ToString() + " " + Form1.Utilisateur[3].ToString());   //log                        
@@ -516,6 +532,12 @@ namespace SRegulV2
 
                 //initialiser quelques champs
                 cBoxPays.Text = "Suisse";
+                MajMedecinTraitantTexte = true;
+                tBoxMedTraitant.Text = "";
+                MajMedecinTraitantTexte = false;
+                IdMedecinTraitant = -1;
+                NomMedecinTraitant = "";
+                PrenomMedecinTraitant = "";
 
                 //Désactivation de Annulation
                 cBoxAnnulation.Checked = false;
@@ -871,8 +893,46 @@ namespace SRegulV2
             tBoxMotif2.BackColor = SystemColors.ControlDark;                   
             tBoxMotifAnnul.BackColor = SystemColors.ControlDark; 
             tBoxRue2Fact.BackColor = SystemColors.ControlDark; 
-     
+
             return retour;
+        }
+
+        private void EnregistrerMedecinTraitant()
+        {
+            if (NumPersonne == -1)
+            {
+                return;
+            }
+
+            FonctionsAppels.MajMedecinTraitant(NumPersonne, IdMedecinTraitant);
+        }
+
+        private void ChargerMedecinTraitant(int numPersonne)
+        {
+            MajMedecinTraitantTexte = true;
+
+            int idMedecin;
+            string nom;
+            string prenom;
+
+            if (FonctionsAppels.GetMedecinTraitant(numPersonne, out idMedecin, out nom, out prenom))
+            {
+                IdMedecinTraitant = idMedecin;
+                NomMedecinTraitant = nom;
+                PrenomMedecinTraitant = prenom;
+                tBoxMedTraitant.Text = (nom + " " + prenom).Trim();
+                tBoxMedTraitant.SelectionStart = 0;
+                tBoxMedTraitant.SelectionLength = 0;
+            }
+            else
+            {
+                IdMedecinTraitant = -1;
+                NomMedecinTraitant = "";
+                PrenomMedecinTraitant = "";
+                tBoxMedTraitant.Text = "";
+            }
+
+            MajMedecinTraitantTexte = false;
         }
 
 
@@ -1106,6 +1166,8 @@ namespace SRegulV2
 
                 //Pour les factures impayées
                 facturesImpayes(NumPersonne);
+
+                ChargerMedecinTraitant(NumPersonne);
 
                 try
                 {
@@ -1395,6 +1457,8 @@ namespace SRegulV2
 
             //Pour les factures impayées
             facturesImpayes(NumPersonne);
+
+            ChargerMedecinTraitant(NumPersonne);
 
             //Pour l'accord LPD on le recherche dans les précédents appels  => Désactivé sur demande du patron           
             //Vérif de la date de naissance
@@ -1698,6 +1762,64 @@ namespace SRegulV2
                 //On stop l'entrée du caractère dans le controle
                 e.Handled = true;
             }
+        }
+
+        private void tBoxMedTraitant_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F5)
+            {
+                FRechMedecinTraitant fRechMedecinTraitant = new FRechMedecinTraitant();
+
+                if (fRechMedecinTraitant.ShowDialog() == DialogResult.OK)
+                {
+                    IdMedecinTraitant = fRechMedecinTraitant.idMedecin;
+                    NomMedecinTraitant = fRechMedecinTraitant.nomMedecin;
+                    PrenomMedecinTraitant = fRechMedecinTraitant.prenomMedecin;
+
+                    MajMedecinTraitantTexte = true;
+                    tBoxMedTraitant.Text = (NomMedecinTraitant + " " + PrenomMedecinTraitant).Trim();
+                    tBoxMedTraitant.SelectionStart = 0;
+                    tBoxMedTraitant.SelectionLength = 0;
+                    MajMedecinTraitantTexte = false;
+                }
+
+                fRechMedecinTraitant.Dispose();
+            }
+            else if (e.KeyCode == Keys.Delete || e.KeyCode == Keys.Back)
+            {
+                MajMedecinTraitantTexte = true;
+                tBoxMedTraitant.Text = "";
+                MajMedecinTraitantTexte = false;
+
+                IdMedecinTraitant = -1;
+                NomMedecinTraitant = "";
+                PrenomMedecinTraitant = "";
+            }
+        }
+
+        private void tBoxMedTraitant_TextChanged(object sender, EventArgs e)
+        {
+            if (MajMedecinTraitantTexte)
+            {
+                return;
+            }
+
+            if (tBoxMedTraitant.Text == "")
+            {
+                IdMedecinTraitant = -1;
+                NomMedecinTraitant = "";
+                PrenomMedecinTraitant = "";
+            }
+        }
+
+        private void tBoxMedTraitant_Enter(object sender, EventArgs e)
+        {
+            tBoxMedTraitant.BackColor = Color.DarkGreen;
+        }
+
+        private void tBoxMedTraitant_Leave(object sender, EventArgs e)
+        {
+            tBoxMedTraitant.BackColor = SystemColors.ControlDark;
         }
 
 
@@ -2596,11 +2718,8 @@ namespace SRegulV2
         {
             string Retour = "KO";
 
-            //On commence par rechercher le médecin traitant de la personne (Stopé à la demande du secrétariat)
-            string[,] MedTraitant = new string[1, 2];
-            MedTraitant[0, 0] = "";
-            MedTraitant[0, 1] = "";
-            //MedTraitant = FonctionsAppels.RechercheMedTraitant(NumPersonne);
+            string nomMedTraitant = NomMedecinTraitant;
+            string prenomMedTraitant = PrenomMedecinTraitant;
 
             //Chaine de connection... ici on attaque MariaDB
             string connex = ConfigurationManager.ConnectionStrings["Connection_Base_FicheVisite"].ToString();
@@ -2649,7 +2768,7 @@ namespace SRegulV2
 
                 //****correspondance***
                 SqlStr2 = "INSERT INTO correspondance ";
-                SqlStr2 += " (Num_Appel, NomMedTraitant, PrenomMedTraitant, ORGTA, ORGAideDom) VALUES(" + NumAppel.ToString() + ",'"+ MedTraitant[0,0] + "','" + MedTraitant[0,1] + "', 0,0)";                                  
+                SqlStr2 += " (Num_Appel, NomMedTraitant, PrenomMedTraitant, ORGTA, ORGAideDom) VALUES(" + NumAppel.ToString() + ",'" + nomMedTraitant.Replace("'", "''") + "','" + prenomMedTraitant.Replace("'", "''") + "', 0,0)";
 
                 //****assurances*****                              
                 SqlStr3 = "INSERT INTO assurances ";
@@ -3281,32 +3400,13 @@ namespace SRegulV2
 
         private void RappelleCTI(string NumTel)
         {
-            //Si le CTI est actif
-            if (Form1.ActivationCTI == true)
+            try
             {
-                string[] Reponse = new string[2];
-                
-                if (FonctionsCTI.toujoursConnecte(Form1.Token, Form1.Ligne) == "OK")
-                {   //On appelle
-                    FonctionsCTI.Appeler(NumTel, Form1.Token, Form1.Ligne);
-                }
-                else   //On se reconnecte (On est déconnecté)
-                {
-                    Reponse = FonctionsCTI.LoguePoste(Form1.Utilisateur[5], Form1.Utilisateur[7]);
-
-                    if (Reponse[0] != "KO")
-                    {
-                        Form1.Token = Reponse[0];
-                        Form1.Ligne = Reponse[1];
-
-                        //Puis on passe l'appel
-                        FonctionsCTI.Appeler(NumTel, Form1.Token, Form1.Ligne);
-                    }
-                    else
-                    {
-                        MessageBox.Show("Erreur lors de la connexion au CTI. Vous pouvez continuer à travailler en désactivant le CTI dans le menu.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
+                System.Diagnostics.Process.Start("tel:" + NumTel);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Impossible de lancer l'appel : " + ex.Message);
             }
         }
 
@@ -3652,6 +3752,11 @@ namespace SRegulV2
             }          
         }
 
+        private void ltelpatient_Click(object sender, EventArgs e)
+        {
+
+        }
+
         private void tBoxRue2Fact_Leave(object sender, EventArgs e)
         {
             tBoxRue2Fact.BackColor = SystemColors.ControlDark;
@@ -3838,4 +3943,3 @@ namespace SRegulV2
 //A faire:
 
 //Voir si date naissance vide DateTime?
-

@@ -67,6 +67,8 @@
             this.tBoxCommune = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.tBoxProvenance = new System.Windows.Forms.TextBox();
+            this.labelMedTraitant = new System.Windows.Forms.Label();
+            this.tBoxMedTraitant = new System.Windows.Forms.TextBox();
             this.label50 = new System.Windows.Forms.Label();
             this.label49 = new System.Windows.Forms.Label();
             this.label48 = new System.Windows.Forms.Label();
@@ -451,6 +453,8 @@
             this.tabPageAdresse.Controls.Add(this.tBoxCommune);
             this.tabPageAdresse.Controls.Add(this.label4);
             this.tabPageAdresse.Controls.Add(this.tBoxProvenance);
+            this.tabPageAdresse.Controls.Add(this.labelMedTraitant);
+            this.tabPageAdresse.Controls.Add(this.tBoxMedTraitant);
             this.tabPageAdresse.Controls.Add(this.label50);
             this.tabPageAdresse.Controls.Add(this.label49);
             this.tabPageAdresse.Controls.Add(this.label48);
@@ -696,9 +700,9 @@
             this.label4.Size = new System.Drawing.Size(13, 16);
             this.label4.TabIndex = 70;
             this.label4.Text = "*";
-            // 
+            //
             // tBoxProvenance
-            // 
+            //
             this.tBoxProvenance.BackColor = System.Drawing.SystemColors.ControlDark;
             this.tBoxProvenance.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tBoxProvenance.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -711,9 +715,35 @@
             this.tBoxProvenance.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tBoxProvenance_KeyDown);
             this.tBoxProvenance.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tBoxProvenance_KeyPress);
             this.tBoxProvenance.Leave += new System.EventHandler(this.tBoxProvenance_Leave);
-            // 
+            //
+            // labelMedTraitant
+            //
+            this.labelMedTraitant.AutoSize = true;
+            this.labelMedTraitant.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelMedTraitant.Location = new System.Drawing.Point(570, 306);
+            this.labelMedTraitant.Name = "labelMedTraitant";
+            this.labelMedTraitant.Size = new System.Drawing.Size(154, 16);
+            this.labelMedTraitant.TabIndex = 70;
+            this.labelMedTraitant.Text = "Médecin traitant <F5> :";
+            //
+            // tBoxMedTraitant
+            //
+            this.tBoxMedTraitant.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.tBoxMedTraitant.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tBoxMedTraitant.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tBoxMedTraitant.ForeColor = System.Drawing.SystemColors.Window;
+            this.tBoxMedTraitant.Location = new System.Drawing.Point(630, 307);
+            this.tBoxMedTraitant.Name = "tBoxMedTraitant";
+            this.tBoxMedTraitant.Size = new System.Drawing.Size(300, 15);
+            this.tBoxMedTraitant.TabIndex = 5;
+            this.tBoxMedTraitant.Enter += new System.EventHandler(this.tBoxMedTraitant_Enter);
+            this.tBoxMedTraitant.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tBoxMedTraitant_KeyDown);
+            this.tBoxMedTraitant.TextChanged += new System.EventHandler(this.tBoxMedTraitant_TextChanged);
+            this.tBoxMedTraitant.Select(0, 0);
+            this.tBoxMedTraitant.Leave += new System.EventHandler(this.tBoxMedTraitant_Leave);
+            //
             // label50
-            // 
+            //
             this.label50.AutoSize = true;
             this.label50.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label50.Location = new System.Drawing.Point(850, 23);
@@ -721,9 +751,9 @@
             this.label50.Size = new System.Drawing.Size(13, 16);
             this.label50.TabIndex = 69;
             this.label50.Text = "*";
-            // 
+            //
             // label49
-            // 
+            //
             this.label49.AutoSize = true;
             this.label49.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label49.Location = new System.Drawing.Point(751, 135);
@@ -2123,6 +2153,7 @@
         private System.Windows.Forms.Label label55;
         private System.Windows.Forms.Label label54;
         private System.Windows.Forms.Label label53;
+        private System.Windows.Forms.Label labelMedTraitant;
         private System.Windows.Forms.Label labelRemarque;
         private System.Windows.Forms.Label labelTA;
         private System.Windows.Forms.ImageList imageList1;
@@ -2151,6 +2182,7 @@
         private System.Windows.Forms.ComboBox cBoxMedecins;
         private System.Windows.Forms.Label label63;
         private System.Windows.Forms.TextBox tBoxNumCarte;
+        private System.Windows.Forms.TextBox tBoxMedTraitant;
         private System.Windows.Forms.Label lRemMedicales;
         private System.Windows.Forms.Button bRappeler2;
         private System.Windows.Forms.Label label3;

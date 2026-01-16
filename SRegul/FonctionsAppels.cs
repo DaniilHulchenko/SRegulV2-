@@ -7113,6 +7113,164 @@ namespace SRegulV2
             return MedTraitant;
         }
 
+        public static bool GetMedecinTraitant(int NumPersonne, out int IdMedecin, out string Nom, out string Prenom)
+        {
+            IdMedecin = -1;
+            Nom = "";
+            Prenom = "";
+
+            if (NumPersonne == -1)
+            {
+                return false;
+            }
+
+            string connex = ConfigurationManager.ConnectionStrings["Connection_Base_Smart"].ToString();
+            SqlConnection dbConnection = new SqlConnection(connex);
+
+            try
+            {
+                dbConnection.Open();
+
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = dbConnection;
+
+                string SqlStr0 = "SELECT tt.IdMedecin, mv.Nom, mv.Prenom FROM tablepersonne p INNER JOIN tablepatient pa ON p.IdPersonne = pa.IdPersonne";
+                SqlStr0 += "                                             INNER JOIN tablepatientmedttt tt ON pa.IdPatient = tt.IdPatient";
+                SqlStr0 += "                                             INNER JOIN medecinsville mv ON tt.IdMedecin = mv.Num";
+                SqlStr0 += " WHERE p.IdPersonne = @Idpersonne";
+
+                cmd.CommandText = SqlStr0;
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("Idpersonne", NumPersonne);
+
+                DataTable dtMedTraitant = new DataTable();
+                dtMedTraitant.Load(cmd.ExecuteReader());
+
+                if (dtMedTraitant.Rows.Count > 0)
+                {
+                    IdMedecin = int.Parse(dtMedTraitant.Rows[0]["IdMedecin"].ToString());
+                    Nom = dtMedTraitant.Rows[0]["Nom"].ToString();
+                    Prenom = dtMedTraitant.Rows[0]["Prenom"].ToString();
+                    return true;
+                }
+            }
+            catch (Exception e)
+            {
+                System.Windows.Forms.MessageBox.Show("Erreur lors de la recherche du médecins traitant :" + e.Message, "Erreur", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+            }
+            finally
+            {
+                if (dbConnection.State == ConnectionState.Open)
+                {
+                    dbConnection.Close();
+                }
+            }
+
+            return false;
+        }
+
+        public static DataTable ChargeListeMedecinsTraitants()
+        {
+            DataTable dtMedecin = new DataTable();
+
+            string connex = ConfigurationManager.ConnectionStrings["Connection_Base_Smart"].ToString();
+            SqlConnection dbConnection = new SqlConnection(connex);
+
+            try
+            {
+                dbConnection.Open();
+
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = dbConnection;
+
+                string sqlstr0 = "SELECT * FROM medecinsville WHERE LTRIM(RTRIM(ISNULL(Nom, ''))) <> '' ORDER BY Nom";
+
+                cmd.CommandText = sqlstr0;
+
+                dtMedecin.Load(cmd.ExecuteReader());
+            }
+            catch (Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show("Erreur lors du chargement de la liste des médecins traitants :" + ex.Message, "Erreur", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+            }
+            finally
+            {
+                if (dbConnection.State == System.Data.ConnectionState.Open)
+                {
+                    dbConnection.Close();
+                }
+            }
+
+            return dtMedecin;
+        }
+
+        public static void MajMedecinTraitant(int NumPersonne, int IdMedecin)
+        {
+            if (NumPersonne == -1)
+            {
+                return;
+            }
+
+            int IdPatient = RecupNumPatient(NumPersonne);
+
+            if (IdPatient == -1)
+            {
+                return;
+            }
+
+            string connex = ConfigurationManager.ConnectionStrings["Connection_Base_Smart"].ToString();
+            SqlConnection dbConnection = new SqlConnection(connex);
+
+            try
+            {
+                dbConnection.Open();
+
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = dbConnection;
+
+                if (IdMedecin <= 0)
+                {
+                    cmd.CommandText = "DELETE FROM tablepatientmedttt WHERE IdPatient = @IdPatient";
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("IdPatient", IdPatient);
+                    cmd.ExecuteNonQuery();
+                    return;
+                }
+
+                cmd.CommandText = "SELECT IdPatient FROM tablepatientmedttt WHERE IdPatient = @IdPatient";
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("IdPatient", IdPatient);
+
+                DataTable dtMedTraitant = new DataTable();
+                dtMedTraitant.Load(cmd.ExecuteReader());
+
+                if (dtMedTraitant.Rows.Count > 0)
+                {
+                    cmd.CommandText = "UPDATE tablepatientmedttt SET IdMedecin = @IdMedecin WHERE IdPatient = @IdPatient";
+                }
+                else
+                {
+                    cmd.CommandText = "INSERT INTO tablepatientmedttt (IdPatient, IdMedecin) VALUES(@IdPatient, @IdMedecin)";
+                }
+
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("IdPatient", IdPatient);
+                cmd.Parameters.AddWithValue("IdMedecin", IdMedecin);
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                System.Windows.Forms.MessageBox.Show("Erreur lors de la mise à jour du médecin traitant :" + e.Message, "Erreur", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+            }
+            finally
+            {
+                if (dbConnection.State == ConnectionState.Open)
+                {
+                    dbConnection.Close();
+                }
+            }
+        }
+
 
         //############################################FIN FONCTIONS INTERROGEANT BASE SMARTRAPPORT###########################################################
         #endregion
