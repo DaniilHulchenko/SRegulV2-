@@ -12,6 +12,7 @@ using System.Globalization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.IO;
+using System.Runtime.InteropServices;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 //using SRegulV2.FonctionsAppels;
 
@@ -20,6 +21,13 @@ namespace SRegulV2
               
     public partial class FVisite : Form
     {
+        private const int MedTraitantLeftPaddingCharacters = 25;
+        private const int EM_SETMARGINS = 0xD3;
+        private const int EC_LEFTMARGIN = 0x1;
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        private static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam);
+
         public int NumVisite = -1;
         public int NumPersonne = -1;
         public string provenance = "MainForm";
@@ -68,6 +76,7 @@ namespace SRegulV2
         public FVisite()
         {
             InitializeComponent();
+            this.tBoxMedTraitant.HandleCreated += new System.EventHandler(this.tBoxMedTraitant_HandleCreated);
 
             listView1.Columns.Add("Etat", 260);
 
@@ -77,6 +86,18 @@ namespace SRegulV2
             //On défini le point comme séparateur décimal
             CultureInfo CultureFr = new CultureInfo("fr-CH");
             CultureFr.NumberFormat.NumberDecimalSeparator = ".";           
+        }
+
+        private void tBoxMedTraitant_HandleCreated(object sender, EventArgs e)
+        {
+            ApplyMedTraitantTextPadding();
+        }
+
+        private void ApplyMedTraitantTextPadding()
+        {
+            string paddingText = new string(' ', MedTraitantLeftPaddingCharacters);
+            int leftMargin = TextRenderer.MeasureText(paddingText, tBoxMedTraitant.Font).Width;
+            SendMessage(tBoxMedTraitant.Handle, EM_SETMARGINS, (IntPtr)EC_LEFTMARGIN, (IntPtr)(leftMargin & 0xFFFF));
         }
 
         private void bAbandonner_Click(object sender, EventArgs e)
@@ -532,9 +553,7 @@ namespace SRegulV2
 
                 //initialiser quelques champs
                 cBoxPays.Text = "Suisse";
-                MajMedecinTraitantTexte = true;
-                tBoxMedTraitant.Text = "";
-                MajMedecinTraitantTexte = false;
+                SetMedecinTraitantText("");
                 IdMedecinTraitant = -1;
                 NomMedecinTraitant = "";
                 PrenomMedecinTraitant = "";
@@ -909,8 +928,6 @@ namespace SRegulV2
 
         private void ChargerMedecinTraitant(int numPersonne)
         {
-            MajMedecinTraitantTexte = true;
-
             int idMedecin;
             string nom;
             string prenom;
@@ -920,18 +937,24 @@ namespace SRegulV2
                 IdMedecinTraitant = idMedecin;
                 NomMedecinTraitant = nom;
                 PrenomMedecinTraitant = prenom;
-                tBoxMedTraitant.Text = (nom + " " + prenom).Trim();
-                tBoxMedTraitant.SelectionStart = 0;
-                tBoxMedTraitant.SelectionLength = 0;
+                SetMedecinTraitantText((nom + " " + prenom).Trim());
             }
             else
             {
                 IdMedecinTraitant = -1;
                 NomMedecinTraitant = "";
                 PrenomMedecinTraitant = "";
-                tBoxMedTraitant.Text = "";
+                SetMedecinTraitantText("");
             }
+        }
 
+        private void SetMedecinTraitantText(string text)
+        {
+            MajMedecinTraitantTexte = true;
+            tBoxMedTraitant.Text = text;
+            tBoxMedTraitant.SelectionStart = 5;
+            tBoxMedTraitant.SelectionLength = 0;
+            tBoxMedTraitant.ScrollToCaret();
             MajMedecinTraitantTexte = false;
         }
 
@@ -1776,20 +1799,14 @@ namespace SRegulV2
                     NomMedecinTraitant = fRechMedecinTraitant.nomMedecin;
                     PrenomMedecinTraitant = fRechMedecinTraitant.prenomMedecin;
 
-                    MajMedecinTraitantTexte = true;
-                    tBoxMedTraitant.Text = (NomMedecinTraitant + " " + PrenomMedecinTraitant).Trim();
-                    tBoxMedTraitant.SelectionStart = 0;
-                    tBoxMedTraitant.SelectionLength = 0;
-                    MajMedecinTraitantTexte = false;
+                    SetMedecinTraitantText((NomMedecinTraitant + " " + PrenomMedecinTraitant).Trim());
                 }
 
                 fRechMedecinTraitant.Dispose();
             }
             else if (e.KeyCode == Keys.Delete || e.KeyCode == Keys.Back)
             {
-                MajMedecinTraitantTexte = true;
-                tBoxMedTraitant.Text = "";
-                MajMedecinTraitantTexte = false;
+                SetMedecinTraitantText("");
 
                 IdMedecinTraitant = -1;
                 NomMedecinTraitant = "";
@@ -1815,6 +1832,9 @@ namespace SRegulV2
         private void tBoxMedTraitant_Enter(object sender, EventArgs e)
         {
             tBoxMedTraitant.BackColor = Color.DarkGreen;
+            tBoxMedTraitant.SelectionStart = 5;
+            tBoxMedTraitant.SelectionLength = 0;
+            tBoxMedTraitant.ScrollToCaret();
         }
 
         private void tBoxMedTraitant_Leave(object sender, EventArgs e)

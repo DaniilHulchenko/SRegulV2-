@@ -7,6 +7,13 @@ namespace SRegulV2
 {
     public partial class FRechMedecinTraitant : Form
     {
+        private class MedecinTraitantInfo
+        {
+            public int Id { get; set; }
+            public string Nom { get; set; } = "";
+            public string Prenom { get; set; } = "";
+        }
+
         private int IdMedecin;
         public int idMedecin
         {
@@ -95,12 +102,14 @@ namespace SRegulV2
                 return;
 
             ListViewItem selectedItem = listView1.SelectedItems[0];
+            if (!TryGetMedecinInfo(selectedItem, out MedecinTraitantInfo info))
+            {
+                return;
+            }
 
-            IdMedecin = int.Parse(selectedItem.Text);
-            string[] nomPrenom = (string[])selectedItem.Tag;
-
-            NomMedecin = nomPrenom[0];
-            PrenomMedecin = nomPrenom[1];
+            IdMedecin = info.Id;
+            NomMedecin = info.Nom;
+            PrenomMedecin = info.Prenom;
 
             DialogResult = DialogResult.OK;
             this.Close();
@@ -113,12 +122,17 @@ namespace SRegulV2
             {
                 if (listView1.Items.Count > 0)
                 {
-                    IdMedecin = int.Parse(listView1.Items[0].Text);
-                    string[] nomPrenom = (string[])listView1.Items[0].Tag;
-                    NomMedecin = nomPrenom[0];
-                    PrenomMedecin = nomPrenom[1];
-
-                    DialogResult = DialogResult.OK;
+                    if (TryGetMedecinInfo(listView1.Items[0], out MedecinTraitantInfo info))
+                    {
+                        IdMedecin = info.Id;
+                        NomMedecin = info.Nom;
+                        PrenomMedecin = info.Prenom;
+                        DialogResult = DialogResult.OK;
+                    }
+                    else
+                    {
+                        DialogResult = DialogResult.Cancel;
+                    }
                 }
                 else
                 {
@@ -147,13 +161,23 @@ namespace SRegulV2
                 }
 
                 string prenom = row["Prenom"].ToString().Trim();
+                if (!int.TryParse(row["Num"].ToString(), out int id))
+                {
+                    continue;
+                }
+
                 string location = GetMedecinLocation(row);
                 string nomPrenom = (nom + " " + prenom).Trim();
                 string displayName = string.IsNullOrWhiteSpace(location) ? nomPrenom : $"{nomPrenom} ({location})";
 
-                ListViewItem item = new ListViewItem(row["Num"].ToString());
+                ListViewItem item = new ListViewItem(id.ToString());
                 item.SubItems.Add(displayName);
-                item.Tag = new string[] { nom, prenom };
+                item.Tag = new MedecinTraitantInfo
+                {
+                    Id = id,
+                    Nom = nom,
+                    Prenom = prenom
+                };
                 listView1.Items.Add(item);
             }
         }
@@ -177,6 +201,17 @@ namespace SRegulV2
             }
 
             return "";
+        }
+
+        private static bool TryGetMedecinInfo(ListViewItem item, out MedecinTraitantInfo info)
+        {
+            info = item?.Tag as MedecinTraitantInfo;
+            if (info == null)
+            {
+                return false;
+            }
+
+            return info.Id > 0 && !string.IsNullOrWhiteSpace(info.Nom);
         }
     }
 }

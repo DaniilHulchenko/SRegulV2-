@@ -656,7 +656,7 @@
             this.tBoxMedTraitant.ForeColor = System.Drawing.SystemColors.Window;
             this.tBoxMedTraitant.Location = new System.Drawing.Point(630, 321);
             this.tBoxMedTraitant.Name = "tBoxMedTraitant";
-            this.tBoxMedTraitant.Size = new System.Drawing.Size(300, 15);
+            this.tBoxMedTraitant.Size = new System.Drawing.Size(300, 19);
             this.tBoxMedTraitant.TabIndex = 5;
             this.tBoxMedTraitant.Enter += new System.EventHandler(this.tBoxMedTraitant_Enter);
             this.tBoxMedTraitant.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tBoxMedTraitant_KeyDown);
